@@ -919,24 +919,180 @@ namespace easing
 	inline float InQuint(const float x)		{ return x * x * x * x * x; }
 	inline float OutQuint(const float x)	{ return 1.0f - powf(1.0f - x, 5.0f); }
 	inline float InOutQuint(const float x)	{ return (x < 0.5f) ? (16.0f * x * x * x * x * x) : (1.0f - powf(-2.0f * x + 2.0f, 5.0f) * 0.5f); }
+	inline float InElastic(const float x)	{ return (x <= 0.0f) ? 0.0f : (x >= 1.0f) ? 1.0f : -powf(2.0f, 10.0f * (x - 1.0f)) * sinf((x - 1.1f) * 5.0f * D3DX_PI); }
+	inline float OutElastic(const float x)	{ return (x <= 0.0f) ? 0.0f : (x >= 1.0f) ? 1.0f : powf(2.0f, -10.0f * x) * sinf((x - 0.1f) * 5.0f * D3DX_PI) + 1.0f; }
+	inline float InOutElastic(const float x)
+	{
+		const float c5 = (2.0f * D3DX_PI) / 4.5f;
+		if		(x <= 0.0f)	{ return 0.0f; }
+		else if	(x >= 1.0f)	{ return 1.0f; }
+		if		(x < 0.5f)	{ return -(powf(2.0f, 20.0f * x - 10.0f) * sinf((20.0f * x - 11.125f) * c5)) / 2.0f; }
+		else				{ return (powf(2.0f, -20.0f * x + 10.0f) * sinf((20.0f * x - 11.125f) * c5)) / 2.0f + 1.0f; }
+	}
+	inline float InBack(const float x, const float c1 = 1.70158f)	{ return (c1 + 1.0f) * x * x * x - c1 * x * x; }
+	inline float OutBack(const float x, const float c1 = 1.70158f)	{ return 1.0f + (c1 + 1.0f) * powf(x - 1.0f, 3.0f) + c1 * powf(x - 1.0f, 2.0f); }
+	inline float InOutBack(const float x, const float c1 = 1.70158f)
+	{
+		const float c2 = c1 * 1.525f;
+		if (x < 0.5f)	{ return (powf(2.0f * x, 2.0f) * ((c2 + 1.0f) * 2.0f * x - c2)) / 2.0f; }
+		else			{ return (powf(2.0f * x - 2.0f, 2.0f) * ((c2 + 1.0f) * (x * 2.0f - 2.0f) + c2) + 2.0f) / 2.0f; }
+	}
 
 	// テンプレート関数
-	template<class T> inline float Liner(T num, const T min, const T max)		{ return Liner(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InSine(T num, const T min, const T max)		{ return InSine(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float OutSine(T num, const T min, const T max)		{ return OutSine(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InOutSine(T num, const T min, const T max)	{ return InOutSine(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InQuad(T num, const T min, const T max)		{ return InQuad(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float OutQuad(T num, const T min, const T max)		{ return OutQuad(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InOutQuad(T num, const T min, const T max)	{ return InOutQuad(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InCubic(T num, const T min, const T max)		{ return InCubic(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float OutCubic(T num, const T min, const T max)	{ return OutCubic(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InOutCubic(T num, const T min, const T max)	{ return InOutCubic(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InQuart(T num, const T min, const T max)		{ return InQuart(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float OutQuart(T num, const T min, const T max)	{ return OutQuart(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InOutQuart(T num, const T min, const T max)	{ return InOutQuart(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InQuint(T num, const T min, const T max)		{ return InQuint(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float OutQuint(T num, const T min, const T max)	{ return OutQuint(useful::ValueToRate(num, min, max)); }
-	template<class T> inline float InOutQuint(T num, const T min, const T max)	{ return InOutQuint(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float Liner(const T num, const T min, const T max)			{ return Liner(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InSine(const T num, const T min, const T max)		{ return InSine(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutSine(const T num, const T min, const T max)		{ return OutSine(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutSine(const T num, const T min, const T max)		{ return InOutSine(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InQuad(const T num, const T min, const T max)		{ return InQuad(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutQuad(const T num, const T min, const T max)		{ return OutQuad(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutQuad(const T num, const T min, const T max)		{ return InOutQuad(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InCubic(const T num, const T min, const T max)		{ return InCubic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutCubic(const T num, const T min, const T max)		{ return OutCubic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutCubic(const T num, const T min, const T max)	{ return InOutCubic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InQuart(const T num, const T min, const T max)		{ return InQuart(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutQuart(const T num, const T min, const T max)		{ return OutQuart(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutQuart(const T num, const T min, const T max)	{ return InOutQuart(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InQuint(const T num, const T min, const T max)		{ return InQuint(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutQuint(const T num, const T min, const T max)		{ return OutQuint(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutQuint(const T num, const T min, const T max)	{ return InOutQuint(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InElastic(const T num, const T min, const T max)		{ return InElastic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float OutElastic(const T num, const T min, const T max)	{ return OutElastic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InOutElastic(const T num, const T min, const T max)	{ return InOutElastic(useful::ValueToRate(num, min, max)); }
+	template<class T> inline float InBack(const T num, const T min, const T max, const float c1 = 1.70158f)		{ return InBack(useful::ValueToRate(num, min, max), c1); }
+	template<class T> inline float OutBack(const T num, const T min, const T max, const float c1 = 1.70158f)	{ return OutBack(useful::ValueToRate(num, min, max), c1); }
+	template<class T> inline float InOutBack(const T num, const T min, const T max, const float c1 = 1.70158f)	{ return InOutBack(useful::ValueToRate(num, min, max), c1); }
+	template<class T> inline T Liner(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = Liner(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InSine(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = InSine(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T OutSine(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = OutSine(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InOutSine(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutSine(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値の計算
+	}
+	template<class T> inline T InQuad(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = InQuad(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T OutQuad(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = OutQuad(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InOutQuad(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutQuad(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値の計算
+	}
+	template<class T> inline T InCubic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = InCubic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T OutCubic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = OutCubic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InOutCubic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutCubic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値の計算
+	}
+	template<class T> inline T InQuart(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = InQuart(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T OutQuart(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = OutQuart(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InOutQuart(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutQuart(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値の計算
+	}
+	template<class T> inline T InQuint(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = InQuint(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T OutQuint(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);		// 現在時間の補正
+		float fRate = OutQuint(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;					// 割合から現在値の計算
+	}
+	template<class T> inline T InOutQuint(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutQuint(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値の計算
+	}
+	template<class T> inline T InElastic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InElastic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値計算
+	}
+	template<class T> inline T OutElastic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = OutElastic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値計算
+	}
+	template<class T> inline T InOutElastic(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InOutElastic(fCurTime, fStartTime, fEndTime);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値計算
+	}
+	template<class T> inline T InBack(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime, const float c1 = 1.70158f)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = InBack(fCurTime, fStartTime, fEndTime, c1);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値計算
+	}
+	template<class T> inline T OutBack(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime, const float c1 = 1.70158f)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);			// 現在時間の補正
+		float fRate = OutBack(fCurTime, fStartTime, fEndTime, c1);	// 線形補間の割合計算
+		return start + (end - start) * fRate;						// 割合から現在値計算
+	}
+	template<class T> inline T InOutBack(const T start, const T end, const float fStartTime, const float fEndTime, float fCurTime, const float c1 = 1.70158f)
+	{
+		useful::LimitNum(fCurTime, fStartTime, fEndTime);				// 現在時間の補正
+		float fRate = InOutBack(fCurTime, fStartTime, fEndTime, c1);	// 線形補間の割合計算
+		return start + (end - start) * fRate;							// 割合から現在値計算
+	}
 }
 
 // カラー関数空間
