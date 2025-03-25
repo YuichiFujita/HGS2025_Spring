@@ -24,15 +24,15 @@
 //************************************************************
 namespace
 {
-	const char*	SETUP_TXT = "data\\CHARACTER\\player.txt";	// セットアップテキスト相対パス
-	const int	PRIORITY = 3;		// プレイヤーの優先順位
-	const float	MOVE = 1.5f;		// 移動量
-	const float	GRAVITY = 0.6f;		// 重力
-	const float	RADIUS = 20.0f;	// 半径
-	const float HEIGHT = 80.0f;	// 身長
-	const float	REV_ROTA = 0.25f;	// 向き変更の補正係数
-	const float	JUMP_REV = 0.18f;	// 通常状態時の空中の移動量の減衰係数
-	const float	LAND_REV = 0.18f;	// 通常状態時の地上の移動量の減衰係数
+	const char*	SETUP_TXT	= "data\\CHARACTER\\player.txt";	// セットアップテキスト相対パス
+	const int	PRIORITY	= 3;		// プレイヤーの優先順位
+	const float	MOVE		= 1.5f;		// 移動量
+	const float	GRAVITY		= 0.6f;		// 重力
+	const float	RADIUS		= 20.0f;	// 半径
+	const float HEIGHT		= 80.0f;	// 身長
+	const float	REV_ROTA	= 0.25f;	// 向き変更の補正係数
+	const float	JUMP_REV	= 0.18f;	// 通常状態時の空中の移動量の減衰係数
+	const float	LAND_REV	= 0.18f;	// 通常状態時の地上の移動量の減衰係数
 
 	namespace camera
 	{
@@ -63,11 +63,11 @@ CPlayer::AFuncState CPlayer::m_aFuncState[] =		// 状態更新関数リスト
 //	コンストラクタ
 //============================================================
 CPlayer::CPlayer() : CObjectChara(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY),
-m_oldPos(VEC3_ZERO),	// 過去位置
-m_move(VEC3_ZERO),	// 移動量
-m_destRot(VEC3_ZERO),	// 目標向き
-m_state(STATE_NONE),	// 状態
-m_bJump(false)			// ジャンプ状況
+	m_oldPos	(VEC3_ZERO),	// 過去位置
+	m_move		(VEC3_ZERO),	// 移動量
+	m_destRot	(VEC3_ZERO),	// 目標向き
+	m_state		(STATE_NONE),	// 状態
+	m_bJump		(false)			// ジャンプ状況
 {
 	// スタティックアサート
 	static_assert(NUM_ARRAY(m_aFuncState) == CPlayer::STATE_MAX, "ERROR : State Count Mismatch");
@@ -87,11 +87,11 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init()
 {
 	// メンバ変数を初期化
-	m_oldPos = VEC3_ZERO;	// 過去位置
-	m_move = VEC3_ZERO;	// 移動量
-	m_destRot = VEC3_ZERO;	// 目標向き
-	m_state = STATE_NORMAL;	// 状態
-	m_bJump = true;			// ジャンプ状況
+	m_oldPos	= VEC3_ZERO;	// 過去位置
+	m_move		= VEC3_ZERO;	// 移動量
+	m_destRot	= VEC3_ZERO;	// 目標向き
+	m_state		= STATE_NORMAL;	// 状態
+	m_bJump		= true;			// ジャンプ状況
 
 	// オブジェクトキャラクターの初期化
 	if (FAILED(CObjectChara::Init()))
@@ -566,7 +566,7 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 
 	// 地面・制限位置着地判定
 	if (pStage->LandFieldPosition(*pPos, m_oldPos, m_move)
-		|| pStage->LandLimitPosition(*pPos, m_move, 0.0f))
+	||  pStage->LandLimitPosition(*pPos, m_move, 0.0f))
 	{ // プレイヤーが着地していた場合
 
 		// 着地している状態にする
