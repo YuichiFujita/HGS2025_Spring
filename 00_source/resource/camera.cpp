@@ -46,7 +46,7 @@ namespace
 	// ゲームカメラ情報
 	namespace game
 	{
-		const VECTOR3 POSR		= VECTOR3(0.0f, 300.0f, 0.0f);	// 注視点位置
+		const VECTOR3 POSR		= VECTOR3(0.0f, 360.0f, 0.0f);	// 注視点位置
 		const VECTOR3 ROT		= VECTOR3(HALF_PI, 0.0f, 0.0f);	// 向き
 		const float DISTANCE	= 100.0f;	// 追従カメラの距離
 		const float REV_POS		= 1.0f;		// カメラ位置の補正係数

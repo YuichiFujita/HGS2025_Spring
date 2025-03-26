@@ -43,12 +43,13 @@ public:
 	void AddScore(const int nAdd);					// スコア加算
 	void TransResult();								// リザルト画面遷移
 	bool IsNormal() const;							// 通常状態確認
-	inline void InitBaseScore()						{ m_nBaseScore = 0; }		// 基礎スコア初期化
-	inline void AddBaseScore(const int nAdd)		{ m_nBaseScore += nAdd; }	// 基礎スコア加算
+	void AddBaseScore(const int nAdd);				// 基礎スコア加算
+	void InitBaseScore();							// 基礎スコア初期化
+	void SetComboValue(const float fMulti);			// コンボ倍率の設定処理
+	void AddComboScore(const int nScore);			// コンボスコアの追加処理
 	inline int GetBaseScore()						{ return m_nBaseScore; }	// 基礎スコア取得
 	inline void SetEnableControlOK(const bool bOK)	{ m_bControlOK = bOK; }		// 操作可能フラグ設定
 	inline bool IsControlOK() const					{ return m_bControlOK; }	// 操作可能フラグ取得
-	void SetComboScore(const float fMulti);		// コンボスコアの設定処理
 
 	// 静的メンバ関数
 	static CGameManager* Create();	// 生成

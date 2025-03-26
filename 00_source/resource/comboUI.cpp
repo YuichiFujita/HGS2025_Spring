@@ -112,6 +112,20 @@ void CComboUI::Update(const float fDeltaTime)
 	}
 
 #endif // _DEBUG
+
+	if (m_pMulti != nullptr)
+	{ // コンボ倍率が NULL じゃない場合
+
+		// コンボ倍率の更新
+		m_pMulti->Update(fDeltaTime);
+	}
+
+	if (m_pScore != nullptr)
+	{ // スコアが NULL じゃない場合
+
+		// スコアの更新
+		m_pScore->Update(fDeltaTime);
+	}
 }
 
 //============================================================
@@ -153,6 +167,16 @@ void CComboUI::SetData()
 }
 
 //============================================================
+// コンボのリセット処理
+//============================================================
+void CComboUI::ResetCombo()
+{
+	// コンボ倍率とスコアをリセット
+	m_pMulti->SetNum(0);
+	m_pScore->SetNum(0);
+}
+
+//============================================================
 // 倍率数値の設定処理
 //============================================================
 void CComboUI::SetMultiValue(const float fMulti)
@@ -161,11 +185,11 @@ void CComboUI::SetMultiValue(const float fMulti)
 }
 
 //============================================================
-// スコア数値の設定処理
+// スコア数値の追加処理
 //============================================================
-void CComboUI::SetScoreValue(const int nScore)
+void CComboUI::AddScoreValue(const int nScore)
 {
-	m_pScore->SetNum(nScore);
+	m_pScore->AddNum(nScore);
 }
 
 //============================================================

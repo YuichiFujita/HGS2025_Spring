@@ -315,15 +315,51 @@ bool CGameManager::IsNormal() const
 }
 
 //============================================================
-// コンボスコアの設定処理
+// 基礎スコア加算
 //============================================================
-void CGameManager::SetComboScore(const float fMulti)
+void CGameManager::AddBaseScore(const int nAdd)
+{
+	// 基礎スコアの加算
+	m_nBaseScore += nAdd;
+
+	// コンボスコアの加算処理
+	m_pComboUI->AddScoreValue(nAdd);
+}
+
+//============================================================
+// 基礎スコア初期化
+//============================================================
+void CGameManager::InitBaseScore()
+{
+	// 基礎スコアの初期化
+	m_nBaseScore = 0;
+
+	// コンボリセット処理
+	m_pComboUI->ResetCombo();
+}
+
+//============================================================
+// コンボ倍率の設定処理
+//============================================================
+void CGameManager::SetComboValue(const float fMulti)
 {
 	// コンボUIが NULL の場合、関数を抜ける
 	if (m_pComboUI == nullptr) { assert(false); return; }
 
 	// 倍率数値の設定処理
 	m_pComboUI->SetMultiValue(fMulti);
+}
+
+//============================================================
+// コンボスコアの設定処理
+//============================================================
+void CGameManager::AddComboScore(const int nScore)
+{
+	// コンボUIが NULL の場合、関数を抜ける
+	if (m_pComboUI == nullptr) { assert(false); return; }
+
+	// 倍率数値の設定処理
+	m_pComboUI->AddScoreValue(nScore);
 }
 
 //============================================================
