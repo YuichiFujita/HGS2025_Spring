@@ -19,7 +19,8 @@
 bool input::Decide()
 {
 	CInputKeyboard* pKey = GET_INPUTKEY;	// キーボード情報
-	return (pKey->IsTrigger(DIK_Z) || pKey->IsTrigger(DIK_RETURN));
+	CInputPad* pPad = GET_INPUTPAD;			// パッド情報
+	return (pKey->IsTrigger(DIK_Z) || pKey->IsTrigger(DIK_RETURN) || pPad->IsTrigger(CInputPad::KEY_A) || pPad->IsTrigger(CInputPad::KEY_START));
 }
 
 //============================================================
@@ -28,7 +29,8 @@ bool input::Decide()
 bool input::Cancel()
 {
 	CInputKeyboard* pKey = GET_INPUTKEY;	// キーボード情報
-	return (pKey->IsTrigger(DIK_X) || pKey->IsTrigger(DIK_LSHIFT) || pKey->IsTrigger(DIK_RSHIFT));
+	CInputPad* pPad = GET_INPUTPAD;			// パッド情報
+	return (pKey->IsTrigger(DIK_X) || pKey->IsTrigger(DIK_LSHIFT) || pKey->IsTrigger(DIK_RSHIFT) || pPad->IsTrigger(CInputPad::KEY_B) || pPad->IsTrigger(CInputPad::KEY_BACK));
 }
 
 //============================================================
