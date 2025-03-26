@@ -309,6 +309,9 @@ bool CPlayer::Hit()
 	// 描画を停止する
 	SetEnableDraw(false);
 
+	// 死亡音再生
+	PLAY_SOUND(CSound::LABEL_SE_DEATH);
+
 	return true;
 }
 
@@ -645,6 +648,9 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 			m_move.x = 0.0f;
 			m_move.z = 0.0f;
 #endif
+
+			// ジャンプ音再生
+			PLAY_SOUND(CSound::LABEL_SE_JUMP);
 		}
 	}
 
@@ -735,6 +741,9 @@ void CPlayer::UpdateShot(const VECTOR3& rPos, const float fDeltaTime)
 
 			// インターバルを設定
 			m_fShotTimer = SHOT_INTERVAL;
+
+			// 射撃音再生
+			PLAY_SOUND(CSound::LABEL_SE_SHOT);
 		}
 	}
 }

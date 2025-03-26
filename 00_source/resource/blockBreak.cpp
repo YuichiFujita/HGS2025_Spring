@@ -8,6 +8,8 @@
 //	インクルードファイル
 //************************************************************
 #include "blockBreak.h"
+#include "manager.h"
+#include "sound.h"
 #include "explosion.h"
 
 //************************************************************
@@ -98,6 +100,9 @@ bool CBlockBreak::Hit()
 
 	// 終了処理
 	Uninit();
+
+	// 爆破音再生
+	PLAY_SOUND(CSound::LABEL_SE_EXPLOSION);
 
 	return true;
 }

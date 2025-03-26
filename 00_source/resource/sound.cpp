@@ -39,7 +39,10 @@ namespace
 	const SSoundInfo SOUND_FILE[] =	// サウンドファイル
 	{
 		SSoundInfo("data\\BGM\\bgm_general.wav", -1),	// BGM
-		SSoundInfo("data\\SE\\snd_ballchime.wav", 0),	// BALL入力効果音
+		SSoundInfo("data\\SE\\jump000.wav", 0),			// ジャンプ
+		SSoundInfo("data\\SE\\shot000.wav", 0),			// 射撃
+		SSoundInfo("data\\SE\\explosion000.wav", 0),	// 爆発
+		SSoundInfo("data\\SE\\death000.wav", 0),		// 死亡
 	};
 }
 
