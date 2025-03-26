@@ -22,10 +22,10 @@ namespace
 	// コンボ関係
 	namespace combo
 	{
-		const int DIGIT = 2;			// 桁数
+		const int DIGIT = 1;			// 桁数
 		const int CONVERT_MULTI = 10;	// 整数変換時の倍率
-		const VECTOR3 POS = VECTOR3(1000.0f, 50.0f, 0.0f);			// 位置
-		const VECTOR3 SIZE = VECTOR3(30.0f, 45.0f, 0.0f);			// サイズ
+		const VECTOR3 POS = VECTOR3(1000.0f, 30.0f, 0.0f);			// 位置
+		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.0f;			// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
 	}
 
@@ -33,8 +33,8 @@ namespace
 	namespace score
 	{
 		const int DIGIT = 3;	// 桁数
-		const VECTOR3 POS = VECTOR3(1100.0f, 80.0f, 0.0f);			// 位置
-		const VECTOR3 SIZE = VECTOR3(40.0f, 60.0f, 0.0f);			// サイズ
+		const VECTOR3 POS = VECTOR3(1180.0f, 70.0f, 0.0f);			// 位置
+		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.2f;			// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
 	}
 }
