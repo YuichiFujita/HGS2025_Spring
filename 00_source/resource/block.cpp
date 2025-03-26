@@ -61,7 +61,7 @@ HRESULT CBlock::Init()
 	}
 
 	// テクスチャ割当
-	BindTexture("data\\TEXTURE\\block000.tga");
+	BindTexture("data\\TEXTURE\\block000.png");
 
 	if (m_pList == nullptr)
 	{ // リストマネージャーが存在しない場合
