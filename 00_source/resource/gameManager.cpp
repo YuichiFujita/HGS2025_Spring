@@ -14,6 +14,7 @@
 #include "rankingManager.h"
 
 #include "block.h"
+#include "comboArea.h"
 
 #ifdef SCORE
 #include "multiValue.h"
@@ -49,6 +50,18 @@ namespace
 		const VECTOR3 PART_SPACE = VECTOR3(PART_SIZE.x * 0.85f, 0.0f, 0.0f);	// タイマー区切り空白
 	}
 #endif
+
+	// コンボエリア関係
+	namespace comboarea
+	{
+		const int MAX_MULTI = 3;			// コンボエリアの総数
+		const VECTOR3 POS[MAX_MULTI] =		// 位置
+		{
+			VECTOR3(0.0f, 120.0f, 0.0f),
+			VECTOR3(0.0f, 360.0f, 0.0f),
+			VECTOR3(0.0f, 600.0f, 0.0f),
+		};
+	}
 }
 
 //************************************************************
@@ -141,6 +154,11 @@ HRESULT CGameManager::Init()
 
 		assert(false);
 		return E_FAIL;
+	}
+
+	for (int nCnt = 1; nCnt < comboarea::MAX_MULTI + 1; nCnt++)
+	{
+		CComboArea::Create(comboarea::POS[nCnt - 1], nCnt);
 	}
 
 	return S_OK;
