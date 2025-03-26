@@ -80,8 +80,9 @@ private:
 	void UpdateDirection();							// 方向の更新
 	void UpdateGravity(const float fDeltaTime);		// 重力の更新
 	void UpdateJump(const float fDeltaTime);		// ジャンプの更新
-	bool UpdateLanding(VECTOR3* pPos, const float fDeltaTime);	// 着地状況の更新
-	void UpdatePosition(VECTOR3* pPos, const float fDeltaTime);	// 位置の更新
+	void UpdateShot(const VECTOR3& rPos, const float fDeltaTime);	// 攻撃の更新
+	bool UpdateLanding(VECTOR3* pPos, const float fDeltaTime);		// 着地状況の更新
+	void UpdatePosition(VECTOR3* pPos, const float fDeltaTime);		// 位置の更新
 
 	// 静的メンバ変数
 	static CListManager<CPlayer>* m_pList;	// オブジェクトリスト
@@ -95,6 +96,7 @@ private:
 	bool	m_bJump;		// ジャンプ状況
 	bool	m_bJumpPress;	// ジャンプ操作フラグ
 	float	m_fJumpTimer;	// ジャンプ操作時間
+	float	m_fShotTimer;	// 攻撃インターバル
 };
 
 #endif	// _PLAYER_H_
