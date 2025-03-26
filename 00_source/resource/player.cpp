@@ -459,6 +459,9 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	// 位置更新
 	UpdatePosition(&posPlayer, fDeltaTime);
 
+	// 倍率エリアとの当たり判定
+	CollisionMulti(posPlayer);
+
 	// 着地判定
 	UpdateLanding(&posPlayer, fDeltaTime);
 
@@ -480,6 +483,8 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
+
+	GET_MANAGER->GetDebugProc()->Print(CDebugProc::POINT_RIGHT, "スコア倍率：[%f]", m_fMaxMulti);
 }
 
 //============================================================
