@@ -19,15 +19,15 @@
 namespace
 {
 	const int PRIORITY = 0;				// 優先順位
-	const float ADD_RATE = 0.0001f;		// 割合の加算数
+	const float ADD_RATE = 0.0003f;		// 割合の加算数
 	const float MAX_RATE = 1.0f;		// 割合の最大値
 	const float MIN_RATE = 0.1f;		// 割合の最小値
-	const float CREATE_RATE = 10.0f;	// 生成の割合
+	const float CREATE_RATE = 15.0f;	// 生成の割合
 
 	const float SPEED_MIN = 2.0f;		// 速度の最小値
 	const float SPEED_MAX = 7.0f;		// 速度の最大値
 	const float BLOCK_POS = -713.0f;	// 右側の位置
-	const float POSY_MIN = 100.0f;		// Y軸位置の最小値
+	const float POSY_MIN = 150.0f;		// Y軸位置の最小値
 	const float POSY_MAX = 680.0f;		// Y軸位置の最大値
 }
 
