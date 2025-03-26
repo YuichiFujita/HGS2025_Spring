@@ -426,6 +426,9 @@
     <ClCompile Include="resource\start.cpp">
       <Filter>outgame</Filter>
     </ClCompile>
+    <ClCompile Include="resource\comboAreaManager.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -766,7 +769,7 @@
     </ClInclude>
     <ClInclude Include="resource\blockFactory.h">
       <Filter>ingame</Filter>
-    </ClInclude>
+      </ClInclude>
     <ClInclude Include="resource\explosion.h">
       <Filter>ingame</Filter>
     </ClInclude>
@@ -778,6 +781,9 @@
     </ClInclude>
     <ClInclude Include="resource\start.h">
       <Filter>outgame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\comboAreaManager.h">
+      <Filter>ingame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@
 namespace
 {
 	const int PRIORITY = 0;				// —Dæ‡ˆÊ
-	const float ADD_RATE = 0.0003f;		// Š„‡‚Ì‰ÁZ”
+	const float ADD_RATE = 0.0001f;		// Š„‡‚Ì‰ÁZ”
 	const float MAX_RATE = 1.0f;		// Š„‡‚ÌÅ‘å’l
 	const float MIN_RATE = 0.1f;		// Š„‡‚ÌÅ¬’l
 	const float CREATE_RATE = 15.0f;	// ¶¬‚ÌŠ„‡

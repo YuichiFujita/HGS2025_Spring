@@ -84,10 +84,6 @@ HRESULT CSceneGame::Init()
 		return E_FAIL;
 	}
 
-	// ゲームカメラにする
-	CCamera* pCamera = GET_MANAGER->GetCamera();	// カメラ情報
-	pCamera->SetState(CCamera::STATE_GAME);			// ゲーム状態を設定
-
 	// BGMの再生
 	PLAY_SOUND(CSound::LABEL_BGM_GENERAL);
 

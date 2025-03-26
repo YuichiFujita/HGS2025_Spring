@@ -10,6 +10,7 @@
 #include "titleManager.h"
 #include "titleState.h"
 #include "manager.h"
+#include "comboAreaManager.h"
 
 //************************************************************
 //	親クラス [CTitleManager] のメンバ関数
@@ -41,6 +42,9 @@ HRESULT CTitleManager::Init()
 
 	// ロゴ表示状態にする
 	ChangeState(new CTitleStateLogo);
+
+	// 生成処理
+	CComboAreaManager::Create();
 
 	return S_OK;
 }
