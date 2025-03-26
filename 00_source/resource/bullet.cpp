@@ -9,6 +9,8 @@
 //************************************************************
 #include "bullet.h"
 
+#include "block.h"
+
 //************************************************************
 //	定数宣言
 //************************************************************
@@ -30,7 +32,7 @@ CListManager<CBullet>* CBullet::m_pList = nullptr;	// オブジェクトリスト
 //	コンストラクタ
 //============================================================
 CBullet::CBullet() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 5),
-m_bRight(true)					// 右側状況
+m_move(VEC3_ZERO)	// 移動量
 {
 
 }
@@ -164,8 +166,8 @@ CBullet* CBullet::Create
 		// サイズを設定
 		pBlock->SetVec3Size(RADIUS);
 
-		// 右側情報を設定
-		pBlock->m_bRight = bRight;
+		// 移動量を設定
+		pBlock->SetMove(bRight);
 
 		// 確保したアドレスを返す
 		return pBlock;
@@ -182,23 +184,51 @@ CListManager<CBullet>* CBullet::GetList()
 }
 
 //============================================================
+// 移動量の設定処理
+//============================================================
+void CBullet::SetMove(const bool bRight)
+{
+	if (bRight)
+	{ // 右側移動の場合
+
+		m_move.x = SPEED;
+	}
+	else
+	{ // 左側移動の場合
+
+		m_move.x = -SPEED;
+	}
+}
+
+//============================================================
+// ブロックとの当たり判定
+//============================================================
+void CBullet::BlockCollision(void)
+{
+	VECTOR3 pos = GetVec3Position();
+	VECTOR3 size = GetVec3Size();
+
+	// ブロックのリストを取得
+	std::list<CBlock*> list = CBlock::GetList()->GetList();
+
+	for (auto pBlock : list)
+	{
+		if (pBlock->Collision(pos, size))
+		{ // ブロックに当たった場合
+
+			// ヒット処理
+			pBlock->Hit();
+		}
+	}
+}
+
+//============================================================
 // 移動処理
 //============================================================
 void CBullet::Move(void)
 {
-	// 位置取得
+	// 位置移動
 	VECTOR3 pos = GetVec3Position();
-
-	// 位置を進める
-	if (m_bRight)
-	{ // 右側移動の場合
-		pos.x += SPEED;
-	}
-	else
-	{ // 左側移動の場合
-		pos.x -= SPEED;
-	}
-
-	// 位置設定
+	pos.x += m_move.x;
 	SetVec3Position(pos);
 }

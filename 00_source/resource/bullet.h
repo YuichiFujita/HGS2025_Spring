@@ -46,7 +46,8 @@ public:
 private:
 
 	// メンバ関数
-	void BlockCollision(void);	// ブロックとの当たり判定
+	void SetMove(const bool bRight);	// 移動量の設定処理
+	void BlockCollision(void);			// ブロックとの当たり判定
 
 	// メンバ関数
 	void Move(void);			// 移動処理
@@ -56,7 +57,7 @@ private:
 
 	// メンバ変数
 	CListManager<CBullet>::AIterator m_iterator;	// イテレーター
-	bool m_bRight;		// 右側状況
+	VECTOR3 m_move;		// 移動量
 };
 
 #endif	// _BLOCK_H_

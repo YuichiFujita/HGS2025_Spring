@@ -10,6 +10,7 @@
 #include "block.h"
 
 #include "blockBreak.h"
+#include "collision.h"
 
 //************************************************************
 //	定数宣言
@@ -32,7 +33,6 @@ CListManager<CBlock>* CBlock::m_pList = nullptr;	// オブジェクトリスト
 //============================================================
 CBlock::CBlock() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
 m_type(CBlock::TYPE_BREAK),		// 種類
-m_bRight(true),					// 右側状況
 m_fSpeed(0.0f)					// 速度
 {
 
@@ -189,11 +189,8 @@ CBlock* CBlock::Create
 		// 種類を設定
 		pBlock->m_type = type;
 
-		// 速度を設定
-		pBlock->m_fSpeed = fSpeed;
-
-		// 右側情報を設定
-		pBlock->m_bRight = bRight;
+		// 速度の設定処理
+		pBlock->SetSpeed(fSpeed, bRight);
 
 		// 確保したアドレスを返す
 		return pBlock;
@@ -210,23 +207,40 @@ CListManager<CBlock>* CBlock::GetList()
 }
 
 //============================================================
+//	当たり判定
+//============================================================
+bool CBlock::Collision(const VECTOR3& rPos, const VECTOR3& rSize)
+{
+	// ブロックとの当たり判定
+	VECTOR3 posBlock = GetVec3Position();
+	VECTOR3 sizeBlock = GetVec3Size();
+	return collision::BoxXY(posBlock, rPos, sizeBlock, rSize, -sizeBlock, -rSize);
+}
+
+//============================================================
+// 速度の設定処理
+//============================================================
+void CBlock::SetSpeed(const float fSpeed, const bool bRight)
+{
+	if (bRight)
+	{ // 右側移動の場合
+
+		m_fSpeed = fSpeed;
+	}
+	else
+	{ // 左側移動の場合
+
+		m_fSpeed = -fSpeed;
+	}
+}
+
+//============================================================
 // 移動処理
 //============================================================
 void CBlock::Move(void)
 {
-	// 位置取得
+	// 位置移動
 	VECTOR3 pos = GetVec3Position();
-
-	// 位置を進める
-	if (m_bRight)
-	{ // 右側移動の場合
-		pos.x += m_fSpeed;
-	}
-	else
-	{ // 左側移動の場合
-		pos.x -= m_fSpeed;
-	}
-
-	// 位置設定
+	pos.x += m_fSpeed;
 	SetVec3Position(pos);
 }

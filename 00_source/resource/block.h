@@ -53,12 +53,14 @@ public:
 	static CListManager<CBlock>* GetList();	// リスト取得
 
 	// メンバ関数
-	virtual bool Hit() = 0;		// ヒット処理
+	virtual bool Collision(const VECTOR3& rPos, const VECTOR3& rSize);		// 当たり判定
+	virtual void Hit() = 0;				// ヒット処理
 
 private:
 
 	// メンバ関数
-	void Move(void);			// 移動処理
+	void SetSpeed(const float fSpeed, const bool bRight);	// 速度の設定処理
+	void Move(void);										// 移動処理
 
 	// 静的メンバ変数
 	static CListManager<CBlock>* m_pList;	// オブジェクトリスト
@@ -67,7 +69,6 @@ private:
 	CListManager<CBlock>::AIterator m_iterator;	// イテレーター
 	EType m_type;		// 種類
 	float m_fSpeed;		// 速度
-	bool m_bRight;		// 右側状況
 };
 
 #endif	// _BLOCK_H_
