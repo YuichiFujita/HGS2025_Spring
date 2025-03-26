@@ -8,13 +8,17 @@
 //	インクルードファイル
 //************************************************************
 #include "blockBreak.h"
+#include "explosion.h"
 
 //************************************************************
 //	定数宣言
 //************************************************************
 namespace
 {
-
+	namespace explosion
+	{
+		const VECTOR3 SIZE = VECTOR3(180.0f, 180.0f, 0.0f);	// 大きさ
+	}
 }
 
 //************************************************************
@@ -88,6 +92,9 @@ bool CBlockBreak::Hit()
 {
 	// 死んでいた場合、関数を抜ける
 	if (IsDeath()) { return false; }
+
+	// 爆発させる
+	CExplosion::Create(CExplosion::TYPE_FIRE, GetVec3Position(), explosion::SIZE);
 
 	// 終了処理
 	Uninit();
