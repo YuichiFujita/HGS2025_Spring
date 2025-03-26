@@ -48,10 +48,10 @@ namespace
 	{
 		const CValue::EType TYPE = CValue::TYPE_NORMAL;	// 数字種類
 		const int DIGIT		 = 8;						// スコア桁数
-		const VECTOR3 POS	 = VECTOR3(740.0f, 160.0f, 0.0f);		// スコア位置
-		const VECTOR3 OFFSET = VECTOR3(0.0f, 112.0f, 0.0f);			// スコアオフセット
-		const VECTOR3 SIZE	 = VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f;	// スコア数字大きさ
-		const VECTOR3 SPACE	 = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
+		const VECTOR3 POS	 = VECTOR3(740.0f, 190.0f, 0.0f);				// スコア位置
+		const VECTOR3 OFFSET = VECTOR3(0.0f, 112.0f, 0.0f);					// スコアオフセット
+		const VECTOR3 SIZE	 = VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f * 1.3f;	// スコア数字大きさ
+		const VECTOR3 SPACE	 = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);			// スコア数字空白
 	}
 #else TIMER
 	const float	RANK_INIT[CRankingManager::MAX_RANK] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };	// 初期ランキング

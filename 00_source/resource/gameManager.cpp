@@ -211,7 +211,7 @@ void CGameManager::Update(const float fDeltaTime)
 	// ÉuÉçÉbÉNÇÃê∂ê¨
 	if (GET_INPUTKEY->IsTrigger(DIK_9))
 	{
-		if (CBlock::Create(D3DXVECTOR3(0.0f, 50.0f, 0.0f), CBlock::TYPE_BREAK, 6.0f, false) == nullptr)
+		if (CBlock::Create(D3DXVECTOR3(0.0f, 50.0f, 0.0f), CBlock::TYPE_BREAK, 3.0f, false) == nullptr)
 		{ // ê∂ê¨Ç…é∏îsÇµÇΩèÍçá
 
 			assert(false);
@@ -219,7 +219,7 @@ void CGameManager::Update(const float fDeltaTime)
 	}
 	else if (GET_INPUTKEY->IsTrigger(DIK_0))
 	{
-		if (CBlock::Create(D3DXVECTOR3(0.0f,200.0f,0.0f), CBlock::TYPE_BREAK, 6.0f, true) == nullptr)
+		if (CBlock::Create(D3DXVECTOR3(0.0f,200.0f,0.0f), CBlock::TYPE_BREAK, 3.0f, true) == nullptr)
 		{ // ê∂ê¨Ç…é∏îsÇµÇΩèÍçá
 
 			assert(false);

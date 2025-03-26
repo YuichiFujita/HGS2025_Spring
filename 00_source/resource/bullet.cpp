@@ -17,8 +17,8 @@
 //************************************************************
 namespace
 {
-	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(10.0f, 10.0f, 0.0f);		// 半径
-	const float SPEED = 4.0f;		// 速度
+	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(40.0f, 20.0f, 0.0f);		// 半径
+	const float SPEED = 9.0f;		// 速度
 }
 
 //************************************************************
@@ -116,11 +116,11 @@ void CBullet::Update(const float fDeltaTime)
 	// 移動処理
 	Move();
 
+	// オブジェクト3Dの更新
+	CObject3D::Update(fDeltaTime);
+
 	// ブロックとの当たり判定
 	BlockCollision();
-
-	// 頂点座標の設定処理
-	SetVtx();
 }
 
 //============================================================
@@ -235,6 +235,9 @@ void CBullet::BlockCollision(void)
 					// 基礎スコアを加算
 					pGameManager->AddBaseScore(1);	// TODO：固定値のスコア加算で(●｀･ω･)ゞ＜ok？
 				}
+
+				// 自身の終了
+				Uninit();
 			}
 		}
 	}

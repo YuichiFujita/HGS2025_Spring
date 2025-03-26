@@ -27,7 +27,7 @@
 //	マクロ定義
 //************************************************************
 // ジャンプ中移動ON/OFF
-#if 0
+#if 1
 #define JUMP_MOVE
 #endif
 
@@ -46,7 +46,7 @@ namespace
 	const float WIDTH		= 50.0f;		// 横幅
 	const float HEIGHT		= 50.0f;		// 縦幅
 	const float	REV_ROTA	= 0.25f;		// 向き変更の補正係数
-	const float	JUMP_REV	= 0.18f;		// 通常状態時の空中の移動量の減衰係数
+	const float	JUMP_REV	= 0.97f;		// 通常状態時の空中の移動量の減衰係数
 	const float	LAND_REV	= 0.18f;		// 通常状態時の地上の移動量の減衰係数
 	const float	JUMP_PRESS_TIME	= 0.37f;	// ジャンプ加算時間
 	const float	MAX_ADD_JUMP	= 1.3f;		// ジャンプ加算最大値
@@ -336,7 +336,7 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 		bool bHit = collision::BoxXY
 		( // 引数
 			rPos,
-			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT, 0.0f),
+			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT * 0.5f, 0.0f),
 			GetVec3Size() * 0.5f,
 			GetVec3Size() * 0.5f,
 			rBlock->GetVec3Size() * 0.5f,
@@ -377,7 +377,7 @@ void CPlayer::CollisionMulti(const VECTOR3& rPos)
 		bool bHit = collision::BoxXY
 		( // 引数
 			rPos,
-			rArea->GetVec3Position(),
+			rArea->GetVec3Position() - VECTOR3(0.0f, HEIGHT * 0.5f, 0.0f),
 			GetVec3Size() * 0.5f,
 			GetVec3Size() * 0.5f,
 			rArea->GetVec3Size() * 0.5f,
@@ -623,6 +623,20 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 			m_move.x = 0.0f;
 			m_move.z = 0.0f;
 #endif
+		}
+	}
+
+	if (pKey->IsPress(DIK_SPACE) || pPad->IsPress(CInputPad::KEY_A))
+	{ // まだプレス中の場合
+
+		if (m_bJump)
+		{ // ジャンプしている場合
+
+			if (m_move.y <= -0.95f)
+			{ // 重力に負け始めている場合
+
+				m_move.y = -0.95f;
+			}
 		}
 	}
 
