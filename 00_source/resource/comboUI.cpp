@@ -24,8 +24,8 @@ namespace
 	{
 		const int DIGIT = 1;			// 桁数
 		const int CONVERT_MULTI = 10;	// 整数変換時の倍率
-		const VECTOR3 POS = VECTOR3(1000.0f, 30.0f, 0.0f);			// 位置
-		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.0f;			// サイズ
+		const VECTOR3 POS = VECTOR3(1255.0f, 30.0f, 0.0f);			// 位置
+		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.0f;	// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
 	}
 
@@ -33,9 +33,17 @@ namespace
 	namespace score
 	{
 		const int DIGIT = 3;	// 桁数
-		const VECTOR3 POS = VECTOR3(1180.0f, 70.0f, 0.0f);			// 位置
-		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.2f;			// サイズ
+		const VECTOR3 POS = VECTOR3(1160.0f, 73.0f, 0.0f);			// 位置
+		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.2f;	// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
+	}
+
+	// ×関係
+	namespace mul
+	{
+		const VECTOR3 POS = VECTOR3(1216.0f, 30.0f, 0.0f);	// 位置
+		const VECTOR3 ROT = VECTOR3(0.0f, 0.0f, 0.2f);		// 向き
+		const VECTOR3 SIZE = VECTOR3(45.0f, 45.0f, 0.0f);	// サイズ
 	}
 }
 
@@ -46,8 +54,9 @@ namespace
 //	コンストラクタ
 //============================================================
 CComboUI::CComboUI() : CObject(CObject::LABEL_UI, CObject::DIM_2D, PRIORITY),
-m_pMulti(nullptr),		// 倍率の情報
-m_pScore(nullptr)		// スコアの情報
+m_pMulti(nullptr),	// 倍率の情報
+m_pScore(nullptr),	// スコアの情報
+m_pMul	(nullptr)	// ×の情報
 {
 
 }
@@ -89,6 +98,8 @@ void CComboUI::Uninit()
 		m_pScore = nullptr;
 	}
 
+	SAFE_UNINIT(m_pMul);
+
 	// オブジェクトを破棄
 	CObject::Release();
 }
@@ -125,6 +136,13 @@ void CComboUI::Update(const float fDeltaTime)
 
 		// スコアの更新
 		m_pScore->Update(fDeltaTime);
+	}
+
+	if (m_pMul != nullptr)
+	{ // ×が NULL じゃない場合
+
+		// ×の更新
+		m_pMul->Update(fDeltaTime);
 	}
 }
 
@@ -164,6 +182,15 @@ void CComboUI::SetData()
 		score::SPACE				// 余白
 	);
 	m_pScore->SetLabel(CObject::LABEL_NONE);
+
+	// ×の情報を生成
+	m_pMul = CObject2D::Create
+	(
+		mul::POS,
+		mul::SIZE,
+		mul::ROT
+	);
+	m_pMul->BindTexture("data\\TEXTURE\\x.png");
 }
 
 //============================================================

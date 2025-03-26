@@ -55,9 +55,9 @@ private:
 	inline void Release() override { CObject::Release(); }	// 破棄
 
 	// メンバ変数
-	CMultiValue* m_pMulti;		// 倍率の情報
-	CMultiValue* m_pScore;		// スコアの情報
-	CObject2D* m_pPoint;		// 小数点の情報
+	CMultiValue* m_pMulti;	// 倍率の情報
+	CMultiValue* m_pScore;	// スコアの情報
+	CObject2D* m_pMul;		// ×の情報
 };
 
 #endif	// _TIME_UI_H_
