@@ -242,6 +242,9 @@ void CBullet::BlockCollision(void)
 
 				// ©g‚ÌI—¹
 				Uninit();
+
+				// ŠÖ”‚ğ”²‚¯‚é
+				return;
 			}
 		}
 	}
