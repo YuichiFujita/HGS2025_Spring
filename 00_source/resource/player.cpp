@@ -339,14 +339,12 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 	{ // —v‘f”•ªŒJ‚è•Ô‚·
 
 		// XY•½–Ê‚Ì“–‚½‚è”»’è
-		bool bHit = collision::BoxXY
+		bool bHit = collision::CircleXY
 		( // ˆø”
 			rPos,
 			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT * 0.5f, 0.0f),
-			GetVec3Size() * 0.5f,
-			GetVec3Size() * 0.5f,
-			rBlock->GetVec3Size() * 0.5f,
-			rBlock->GetVec3Size() * 0.5f
+			GetVec3Size().x * 0.5f,
+			rBlock->GetVec3Size().x * 0.5f
 		);
 		if (bHit)
 		{ // “–‚½‚Á‚½ê‡

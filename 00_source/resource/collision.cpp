@@ -87,9 +87,41 @@ bool collision::Box3D
 }
 
 //============================================================
+//	XY平面の円の当たり判定
+//============================================================
+bool collision::CircleXY
+(
+	VECTOR3 centerPos,		// 判定位置
+	VECTOR3 targetPos,		// 判定目標位置
+	float fCenterRadius,	// 判定半径
+	float fTargetRadius,	// 判定目標半径
+	float* pLength			// 判定目標との距離
+)
+{
+	// 判定位置と判定目標位置の距離を求める
+	float fLength = (centerPos.x - targetPos.x) * (centerPos.x - targetPos.x)
+				  + (centerPos.y - targetPos.y) * (centerPos.y - targetPos.y);
+
+	if (pLength != nullptr)
+	{ // ポインタが使用されている場合
+
+		// 判定目標との距離を代入
+		*pLength = fLength;
+	}
+
+	if (fLength < ((fCenterRadius + fTargetRadius) * (fCenterRadius + fTargetRadius)))
+	{ // 判定内の場合
+
+		return true;
+	}
+
+	return false;
+}
+
+//============================================================
 //	XZ平面の円の当たり判定
 //============================================================
-bool collision::Circle2D
+bool collision::CircleXZ
 (
 	VECTOR3 centerPos,		// 判定位置
 	VECTOR3 targetPos,		// 判定目標位置
