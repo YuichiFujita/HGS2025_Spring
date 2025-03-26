@@ -59,12 +59,10 @@ public:
 	EState GetState() const;			// 状態取得
 	float GetRadius() const;			// 半径取得
 	float GetHeight() const;			// 縦幅取得
-	inline void SetDestRotation(const VECTOR3& rRot)	{ m_destRot = rRot; }	// 目標向き設定
-	inline VECTOR3 GetDestRotation() const				{ return m_destRot; }	// 目標向き取得
-	inline void SetMove(const VECTOR3& rMove)			{ m_move = rMove; }		// 移動量設定
-	inline VECTOR3 GetMove() const						{ return m_move; }		// 移動量取得
-	inline void SetEnableJump(const bool bJump)			{ m_bJump = bJump; }	// ジャンプ状況設定
-	inline bool IsJump() const							{ return m_bJump; }		// ジャンプ状況設定
+	inline void SetMove(const VECTOR3& rMove)	{ m_move = rMove; }		// 移動量設定
+	inline VECTOR3 GetMove() const				{ return m_move; }		// 移動量取得
+	inline void SetEnableJump(const bool bJump)	{ m_bJump = bJump; }	// ジャンプ状況設定
+	inline bool IsJump() const					{ return m_bJump; }		// ジャンプ状況設定
 
 private:
 	// エイリアス定義
@@ -74,27 +72,29 @@ private:
 	static AFuncState m_aFuncState[];	// 状態更新関数リスト
 
 	// メンバ関数
-	void UpdateNone(const float fDeltaTime);	// 何もしない状態時の更新
-	void UpdateNormal(const float fDeltaTime);	// 通常状態時の更新
-	void UpdateDeath(const float fDeltaTime);	// 死亡状態時の更新
-	void UpdateMove(const float fDeltaTime);	// 移動量/目標向きの更新
-	void UpdateOldPosition();					// 過去位置の更新
-	void UpdateGravity(const float fDeltaTime);	// 重力の更新
-	void UpdateJump(const float fDeltaTime);	// ジャンプの更新
+	void UpdateNone(const float fDeltaTime);		// 何もしない状態時の更新
+	void UpdateNormal(const float fDeltaTime);		// 通常状態時の更新
+	void UpdateDeath(const float fDeltaTime);		// 死亡状態時の更新
+	void UpdateMove(const float fDeltaTime);		// 移動量/目標向きの更新
+	void UpdateOldPosition();						// 過去位置の更新
+	void UpdateDirection();							// 方向の更新
+	void UpdateGravity(const float fDeltaTime);		// 重力の更新
+	void UpdateJump(const float fDeltaTime);		// ジャンプの更新
 	bool UpdateLanding(VECTOR3* pPos, const float fDeltaTime);	// 着地状況の更新
 	void UpdatePosition(VECTOR3* pPos, const float fDeltaTime);	// 位置の更新
-	void UpdateRotation(VECTOR3* pRot, const float fDeltaTime);	// 向きの更新
 
 	// 静的メンバ変数
 	static CListManager<CPlayer>* m_pList;	// オブジェクトリスト
 
 	// メンバ変数
 	CListManager<CPlayer>::AIterator m_iterator;	// イテレーター
-	VECTOR3	m_oldPos;	// 過去位置
-	VECTOR3	m_move;		// 移動量
-	VECTOR3	m_destRot;	// 目標向き
-	EState	m_state;	// 状態
-	bool	m_bJump;	// ジャンプ状況
+	VECTOR3	m_oldPos;		// 過去位置
+	VECTOR3	m_move;			// 移動量
+	EState	m_state;		// 状態
+	bool	m_bRight;		// 左右フラグ
+	bool	m_bJump;		// ジャンプ状況
+	bool	m_bJumpPress;	// ジャンプ操作フラグ
+	float	m_fJumpTimer;	// ジャンプ操作時間
 };
 
 #endif	// _PLAYER_H_
