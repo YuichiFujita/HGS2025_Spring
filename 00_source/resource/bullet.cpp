@@ -115,6 +115,9 @@ void CBullet::Update(const float fDeltaTime)
 	// 移動処理
 	Move();
 
+	// ブロックとの当たり判定
+	BlockCollision();
+
 	// 頂点座標の設定処理
 	SetVtx();
 }
