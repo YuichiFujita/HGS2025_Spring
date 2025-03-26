@@ -42,7 +42,8 @@ namespace
 		const float	WAIT_TIME	= 0.15f;		// 文字表示の待機時間
 		const EAlignX ALIGN_X	= XALIGN_LEFT;	// 横配置
 		const EAlignY ALIGN_Y	= YALIGN_TOP;	// 縦配置
-		const VECTOR3 POS		= VECTOR3(500.0f, 305.0f, 0.0f);	// 位置
+		const VECTOR3 POS		= VECTOR3(550.0f, 350.0f, 0.0f);	// 位置
+		const D3DXCOLOR COL = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);	// 色
 	}
 
 	namespace cont
@@ -217,7 +218,8 @@ HRESULT CResultManager::Init()
 			rank::WAIT_TIME,	// 文字表示の待機時間
 			rank::HEIGHT,		// 文字縦幅
 			rank::ALIGN_X,		// 横配置
-			rank::ALIGN_Y		// 縦配置
+			VEC3_ZERO,			// 向き
+			rank::COL			// 色
 		);
 		if (m_pUpdateRank == nullptr)
 		{ // 生成に失敗した場合
