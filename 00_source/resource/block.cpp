@@ -9,6 +9,8 @@
 //************************************************************
 #include "block.h"
 
+#include "blockBreak.h"
+
 //************************************************************
 //	定数宣言
 //************************************************************
@@ -29,7 +31,8 @@ CListManager<CBlock>* CBlock::m_pList = nullptr;	// オブジェクトリスト
 //	コンストラクタ
 //============================================================
 CBlock::CBlock() : CObjectMeshCube(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
-m_bRight(true)
+m_type(CBlock::TYPE_BREAK),		// 種類
+m_bRight(true)					// 右側状況
 {
 
 }
@@ -119,11 +122,30 @@ void CBlock::Draw(CShader* pShader)
 CBlock* CBlock::Create
 (
 	const VECTOR3& rPos,	// 位置
+	const EType type,		// 種類
 	const bool bRight		// 右側
 )
 {
-	// プレイヤーの生成
-	CBlock* pBlock = new CBlock;
+	// ブロックの生成
+	CBlock* pBlock = nullptr;
+
+	switch (type)
+	{
+	case CBlock::TYPE_BREAK:
+
+		// 破壊可能ブロック
+		pBlock = new CBlockBreak;
+
+		break;
+
+	default:
+
+		// 停止
+		assert(false);
+
+		break;
+	}
+
 	if (pBlock == nullptr)
 	{ // 生成に失敗した場合
 
@@ -159,15 +181,4 @@ CListManager<CBlock>* CBlock::GetList()
 {
 	// オブジェクトリストを返す
 	return m_pList;
-}
-
-//============================================================
-//	ヒット処理
-//============================================================
-bool CBlock::Hit()
-{
-	// 死んでる場合抜ける
-	if (IsDeath()) { return false; }
-
-	return true;
 }

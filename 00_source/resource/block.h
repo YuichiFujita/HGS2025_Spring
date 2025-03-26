@@ -46,12 +46,13 @@ public:
 	static CBlock* Create	// 生成
 	( // 引数
 		const VECTOR3& rPos,	// 位置
+		const EType type,		// 種類
 		const bool bRight		// 右側
 	);
 	static CListManager<CBlock>* GetList();	// リスト取得
 
 	// メンバ関数
-	bool Hit();	// ヒット
+	virtual bool Hit() = 0;		// ヒット処理
 
 private:
 
@@ -60,6 +61,7 @@ private:
 
 	// メンバ変数
 	CListManager<CBlock>::AIterator m_iterator;	// イテレーター
+	EType m_type;		// 種類
 	bool m_bRight;		// 右側状況
 };
 
