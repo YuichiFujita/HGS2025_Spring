@@ -174,6 +174,7 @@
     <ClCompile Include="resource\deltaTime.cpp" />
     <ClCompile Include="resource\effect2D.cpp" />
     <ClCompile Include="resource\effect3D.cpp" />
+    <ClCompile Include="resource\explosion.cpp" />
     <ClCompile Include="resource\extension.cpp" />
     <ClCompile Include="resource\fade.cpp" />
     <ClCompile Include="resource\field.cpp" />
@@ -181,7 +182,9 @@
     <ClCompile Include="resource\fontChar.cpp" />
     <ClCompile Include="resource\gameManager.cpp" />
     <ClCompile Include="resource\gameState.cpp" />
+    <ClCompile Include="resource\gameStateEnd.cpp" />
     <ClCompile Include="resource\gameStateNormal.cpp" />
+    <ClCompile Include="resource\gameStateStart.cpp" />
     <ClCompile Include="resource\gauge2D.cpp" />
     <ClCompile Include="resource\hitStop.cpp" />
     <ClCompile Include="resource\input.cpp" />
@@ -255,6 +258,7 @@
     <ClCompile Include="resource\sky.cpp" />
     <ClCompile Include="resource\sound.cpp" />
     <ClCompile Include="resource\stage.cpp" />
+    <ClCompile Include="resource\start.cpp" />
     <ClCompile Include="resource\string2D.cpp" />
     <ClCompile Include="resource\text2D.cpp" />
     <ClCompile Include="resource\texture.cpp" />
@@ -292,6 +296,7 @@
     <ClInclude Include="resource\deltaTime.h" />
     <ClInclude Include="resource\effect2D.h" />
     <ClInclude Include="resource\effect3D.h" />
+    <ClInclude Include="resource\explosion.h" />
     <ClInclude Include="resource\extension.h" />
     <ClInclude Include="resource\fade.h" />
     <ClInclude Include="resource\field.h" />
@@ -299,7 +304,9 @@
     <ClInclude Include="resource\fontChar.h" />
     <ClInclude Include="resource\gameManager.h" />
     <ClInclude Include="resource\gameState.h" />
+    <ClInclude Include="resource\gameStateEnd.h" />
     <ClInclude Include="resource\gameStateNormal.h" />
+    <ClInclude Include="resource\gameStateStart.h" />
     <ClInclude Include="resource\gauge2D.h" />
     <ClInclude Include="resource\hitStop.h" />
     <ClInclude Include="resource\input.h" />
@@ -371,6 +378,7 @@
     <ClInclude Include="resource\sky.h" />
     <ClInclude Include="resource\sound.h" />
     <ClInclude Include="resource\stage.h" />
+    <ClInclude Include="resource\start.h" />
     <ClInclude Include="resource\string2D.h" />
     <ClInclude Include="resource\text2D.h" />
     <ClInclude Include="resource\texture.h" />

@@ -99,8 +99,8 @@ HRESULT CGameManager::Init()
 	m_nBaseScore = 0;		// 基礎スコア
 	m_pComboUI	 = nullptr;	// コンボUI
 
-	// 通常状態にする
-	ChangeState(new CGameStateNormal);
+	// 開始状態にする
+	ChangeState(new CGameStateStart);
 
 #ifdef SCORE
 	// スコアの生成
@@ -292,8 +292,8 @@ void CGameManager::TransResult()
 	pRetention->SetUpdateRankIdx(CRankingManager::SetRank(fTime));	// ランキング更新インデックスの保存
 #endif
 
-	// リザルト画面に遷移する
-	GET_MANAGER->SetLoadScene(CScene::MODE_RESULT);
+	// 終了状態にする
+	ChangeState(new CGameStateEnd);
 }
 
 //============================================================

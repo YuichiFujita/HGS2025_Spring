@@ -22,6 +22,7 @@
 #include "bullet.h"
 #include "comboArea.h"
 #include "collision.h"
+#include "explosion.h"
 
 //************************************************************
 //	マクロ定義
@@ -55,9 +56,14 @@ namespace
 	const float	SHOT_INTERVAL		= 0.4f;		// 攻撃インターバル
 	const float	BULLET_OFFSET_X		= 8.0f;		// 弾発生座標のXオフセット
 
+	namespace explosion
+	{
+		const VECTOR3 SIZE = VECTOR3(180.0f, 180.0f, 0.0f);	// 大きさ
+	}
+
 	namespace camera
 	{
-		const CCamera::SSwing HIT_SWING = CCamera::SSwing(8.0f, 1.8f, 0.14f);	// ヒット時のカメラ揺れ
+		const CCamera::SSwing HIT_SWING = CCamera::SSwing(38.0f, 1.8f, 0.22f);	// ヒット時のカメラ揺れ
 	}
 }
 
@@ -289,6 +295,9 @@ bool CPlayer::Hit()
 	// 死亡状態にする
 	SetState(STATE_DEATH);
 
+	// 爆発させる
+	CExplosion::Create(CExplosion::TYPE_SMOKE, GetVec3Position(), explosion::SIZE);
+
 	CGameManager* pGameManager = CSceneGame::GetGameManager();	// ゲームマネージャー
 	if (pGameManager != nullptr)
 	{ // ゲームマネージャーがある場合
@@ -296,6 +305,9 @@ bool CPlayer::Hit()
 		// リザルト画面に遷移する
 		pGameManager->TransResult();
 	}
+
+	// 描画を停止する
+	SetEnableDraw(false);
 
 	return true;
 }
@@ -339,14 +351,12 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 	{ // 要素数分繰り返す
 
 		// XY平面の当たり判定
-		bool bHit = collision::BoxXY
+		bool bHit = collision::CircleXY
 		( // 引数
 			rPos,
 			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT * 0.5f, 0.0f),
-			GetVec3Size() * 0.5f,
-			GetVec3Size() * 0.5f,
-			rBlock->GetVec3Size() * 0.5f,
-			rBlock->GetVec3Size() * 0.5f
+			GetVec3Size().x * 0.5f,
+			rBlock->GetVec3Size().x * 0.35f
 		);
 		if (bHit)
 		{ // 当たった場合
