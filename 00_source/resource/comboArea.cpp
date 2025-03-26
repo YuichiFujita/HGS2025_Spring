@@ -21,7 +21,7 @@ namespace
 		"data\\TEXTURE\\ComboArea002.png",
 	};
 	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(1440.0f, 240.0f, 0.0f);		// 半径
-	const float MULTI_RATE = 0.5f;		// コンボ倍率
+	const float MULTI_RATE = 1.0f;		// コンボ倍率
 	const float MIN_MULTI = 1.0f;		// コンボの最低値
 }
 
