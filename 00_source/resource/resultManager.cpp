@@ -13,6 +13,7 @@
 #include "retention.h"
 #include "object2D.h"
 #include "scrollString2D.h"
+#include "comboAreaManager.h"
 
 #ifdef SCORE
 #include "multiValue.h"
@@ -270,6 +271,9 @@ HRESULT CResultManager::Init()
 		float fSelectHeight = useful::GetTexHeightFromAspect(select::WIDTH, select::TEXTURE[i]);	// テクスチャ基準の縦幅
 		m_apSelect[i]->SetVec3Size(VECTOR3(select::WIDTH, fSelectHeight, 0.0f));
 	}
+
+	// コンボエリアマネージャーを生成
+	CComboAreaManager::Create();
 
 	return S_OK;
 }

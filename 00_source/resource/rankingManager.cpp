@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "anim2D.h"
 #include "retention.h"
+#include "comboAreaManager.h"
 
 #ifdef SCORE
 #include "multiValue.h"
@@ -222,6 +223,9 @@ HRESULT CRankingManager::Init()
 
 	// 通常状態にする
 	ChangeState(new CRankingStateNormal);
+
+	// コンボエリアマネージャーを生成
+	CComboAreaManager::Create();
 
 	return S_OK;
 }
