@@ -24,12 +24,12 @@
 //************************************************************
 namespace
 {
-	const char*	SETUP_TXT	= "data\\CHARACTER\\player.txt";	// セットアップテキスト相対パス
 	const int	PRIORITY	= 3;		// プレイヤーの優先順位
-	const float	MOVE		= 1.5f;		// 移動量
+	const float	MOVE		= 0.9f;		// 移動量
 	const float	GRAVITY		= 0.6f;		// 重力
 	const float	RADIUS		= 20.0f;	// 半径
-	const float HEIGHT		= 80.0f;	// 身長
+	const float WIDTH		= 50.0f;	// 横幅
+	const float HEIGHT		= 50.0f;	// 縦幅
 	const float	REV_ROTA	= 0.25f;	// 向き変更の補正係数
 	const float	JUMP_REV	= 0.18f;	// 通常状態時の空中の移動量の減衰係数
 	const float	LAND_REV	= 0.18f;	// 通常状態時の地上の移動量の減衰係数
@@ -37,11 +37,6 @@ namespace
 	namespace camera
 	{
 		const CCamera::SSwing HIT_SWING = CCamera::SSwing(8.0f, 1.8f, 0.14f);	// ヒット時のカメラ揺れ
-	}
-
-	namespace motion
-	{
-		const int BLEND_FRAME_OTHER = 5;	// モーションの基本的なブレンドフレーム
 	}
 }
 
@@ -62,7 +57,7 @@ CPlayer::AFuncState CPlayer::m_aFuncState[] =		// 状態更新関数リスト
 //============================================================
 //	コンストラクタ
 //============================================================
-CPlayer::CPlayer() : CObjectChara(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY),
+CPlayer::CPlayer() : CObject3D(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY),
 	m_oldPos	(VEC3_ZERO),	// 過去位置
 	m_move		(VEC3_ZERO),	// 移動量
 	m_destRot	(VEC3_ZERO),	// 目標向き
@@ -94,7 +89,7 @@ HRESULT CPlayer::Init()
 	m_bJump		= true;			// ジャンプ状況
 
 	// オブジェクトキャラクターの初期化
-	if (FAILED(CObjectChara::Init()))
+	if (FAILED(CObject3D::Init()))
 	{ // 初期化に失敗した場合
 
 		// 失敗を返す
@@ -102,11 +97,11 @@ HRESULT CPlayer::Init()
 		return E_FAIL;
 	}
 
-	// キャラクター情報の割当
-	BindCharaData(SETUP_TXT);
+	// 大きさの設定
+	SetVec3Size(VECTOR3(WIDTH, HEIGHT, 0.0f));
 
-	// 初期モーションの割当
-	SetMotion(MOTION_IDOL);
+	// 原点の設定
+	SetOrigin(CObject3D::ORIGIN_DOWN);
 
 	if (m_pList == nullptr)
 	{ // リストマネージャーが存在しない場合
@@ -145,7 +140,7 @@ void CPlayer::Uninit()
 	}
 
 	// オブジェクトキャラクターの終了
-	CObjectChara::Uninit();
+	CObject3D::Uninit();
 }
 
 //============================================================
@@ -157,10 +152,10 @@ void CPlayer::Update(const float fDeltaTime)
 	UpdateOldPosition();
 
 	// 状態の更新
-	EMotion curMotion = (this->*(m_aFuncState[m_state]))(fDeltaTime);
+	(this->*(m_aFuncState[m_state]))(fDeltaTime);
 
-	// モーション・オブジェクトキャラクターの更新
-	UpdateMotion(curMotion, fDeltaTime);
+	// オブジェクトキャラクターの更新
+	CObject3D::Update(fDeltaTime);
 }
 
 //============================================================
@@ -169,7 +164,7 @@ void CPlayer::Update(const float fDeltaTime)
 void CPlayer::Draw(CShader* pShader)
 {
 	// オブジェクトキャラクターの描画
-	CObjectChara::Draw(pShader);
+	CObject3D::Draw(pShader);
 }
 
 //============================================================
@@ -309,7 +304,7 @@ float CPlayer::GetHeight() const
 //============================================================
 //	何もしない状態時の更新処理
 //============================================================
-CPlayer::EMotion CPlayer::UpdateNone(const float fDeltaTime)
+void CPlayer::UpdateNone(const float fDeltaTime)
 {
 	VECTOR3 posPlayer = GetVec3Position();	// プレイヤー位置
 	VECTOR3 rotPlayer = GetVec3Rotation();	// プレイヤー向き
@@ -335,33 +330,33 @@ CPlayer::EMotion CPlayer::UpdateNone(const float fDeltaTime)
 
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
-
-	// 待機モーションを返す
-	return MOTION_IDOL;
 }
 
 //============================================================
 //	通常状態時の更新処理
 //============================================================
-CPlayer::EMotion CPlayer::UpdateNormal(const float fDeltaTime)
+void CPlayer::UpdateNormal(const float fDeltaTime)
 {
 	// 操作不可能な場合抜ける
 	CGameManager* pGameManager = CSceneGame::GetGameManager();	// ゲームマネージャー
 	if (pGameManager != nullptr)
 	{ // ゲームマネージャーがある場合
 
-		if (!pGameManager->IsControlOK()) { return MOTION_IDOL; }
+		// 操作不可能な場合抜ける
+		if (!pGameManager->IsControlOK()) { return; }
 	}
 
-	EMotion curMotion = MOTION_IDOL;		// 現在のモーション
 	VECTOR3 posPlayer = GetVec3Position();	// プレイヤー位置
 	VECTOR3 rotPlayer = GetVec3Rotation();	// プレイヤー向き
 
 	// 移動操作
-	curMotion = UpdateMove(fDeltaTime);
+	UpdateMove(fDeltaTime);
 
 	// 重力の更新
 	UpdateGravity(fDeltaTime);
+
+	// ジャンプの更新
+	UpdateJump(fDeltaTime);
 
 	// 位置更新
 	UpdatePosition(&posPlayer, fDeltaTime);
@@ -381,15 +376,12 @@ CPlayer::EMotion CPlayer::UpdateNormal(const float fDeltaTime)
 
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
-
-	// 現在のモーションを返す
-	return curMotion;
 }
 
 //============================================================
 //	死亡状態時の更新処理
 //============================================================
-CPlayer::EMotion CPlayer::UpdateDeath(const float fDeltaTime)
+void CPlayer::UpdateDeath(const float fDeltaTime)
 {
 	VECTOR3 posPlayer = GetVec3Position();	// プレイヤー位置
 	VECTOR3 rotPlayer = GetVec3Rotation();	// プレイヤー向き
@@ -415,10 +407,6 @@ CPlayer::EMotion CPlayer::UpdateDeath(const float fDeltaTime)
 
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
-
-	// 死亡モーションを返す
-	//return MOTION_DEATH;	// TODO：死亡できたら変更
-	return MOTION_IDOL;
 }
 
 //============================================================
@@ -433,93 +421,83 @@ void CPlayer::UpdateOldPosition()
 //============================================================
 //	移動量/目標向きの更新処理
 //============================================================
-CPlayer::EMotion CPlayer::UpdateMove(const float fDeltaTime)
+void CPlayer::UpdateMove(const float fDeltaTime)
 {
 	float fDeltaRate = fDeltaTime / (1.0f / (float)main::FPS);	// 経過時間の割合
 	CInputKeyboard* pKey = GET_INPUTKEY;			// キーボード情報
 	CInputPad* pPad = GET_INPUTPAD;					// パッド情報
 	CCamera* pCamera = GET_MANAGER->GetCamera();	// カメラ情報
 	float fCameraRotY = pCamera->GetRotation().y;	// カメラ向き
-	EMotion curMotion = MOTION_IDOL;				// 現在のモーション
-	if (pKey->IsPress(DIK_W) || pPad->IsPress(CInputPad::KEY_UP) || pPad->GetPressLStickY() < 0)
-	{ // 奥移動の操作が行われた場合
+	//if (pKey->IsPress(DIK_W) || pPad->IsPress(CInputPad::KEY_UP) || pPad->GetPressLStickY() < 0)
+	//{ // 奥移動の操作が行われた場合
 
-		// 移動モーションにする
-		curMotion = MOTION_WALK;
+	//	if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
+	//	{ // 左移動の操作も行われた場合 (左奥移動)
 
-		if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
-		{ // 左移動の操作も行われた場合 (左奥移動)
+	//		// 移動量を更新
+	//		m_move.x += sinf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
+	//		m_move.z += cosf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
 
-			// 移動量を更新
-			m_move.x += sinf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
-			m_move.z += cosf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(135) + fCameraRotY;
+	//	}
+	//	else if (pKey->IsPress(DIK_D) || pPad->IsPress(CInputPad::KEY_RIGHT) || pPad->GetPressLStickX() > 0)
+	//	{ // 右移動の操作も行われた場合 (右奥移動)
 
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(135) + fCameraRotY;
-		}
-		else if (pKey->IsPress(DIK_D) || pPad->IsPress(CInputPad::KEY_RIGHT) || pPad->GetPressLStickX() > 0)
-		{ // 右移動の操作も行われた場合 (右奥移動)
+	//		// 移動量を更新
+	//		m_move.x -= sinf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
+	//		m_move.z -= cosf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
 
-			// 移動量を更新
-			m_move.x -= sinf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
-			m_move.z -= cosf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(225) + fCameraRotY;
+	//	}
+	//	else
+	//	{ // 奥移動の操作だけが行われた場合 (奥移動)
 
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(225) + fCameraRotY;
-		}
-		else
-		{ // 奥移動の操作だけが行われた場合 (奥移動)
+	//		// 移動量を更新
+	//		m_move.x += sinf(fCameraRotY) * MOVE * fDeltaRate;
+	//		m_move.z += cosf(fCameraRotY) * MOVE * fDeltaRate;
 
-			// 移動量を更新
-			m_move.x += sinf(fCameraRotY) * MOVE * fDeltaRate;
-			m_move.z += cosf(fCameraRotY) * MOVE * fDeltaRate;
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(180) + fCameraRotY;
+	//	}
+	//}
+	//else if (pKey->IsPress(DIK_S) || pPad->IsPress(CInputPad::KEY_DOWN) || pPad->GetPressLStickY() > 0)
+	//{ // 手前移動の操作が行われた場合
 
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(180) + fCameraRotY;
-		}
-	}
-	else if (pKey->IsPress(DIK_S) || pPad->IsPress(CInputPad::KEY_DOWN) || pPad->GetPressLStickY() > 0)
-	{ // 手前移動の操作が行われた場合
+	//	if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
+	//	{ // 左移動の操作も行われた場合 (左手前移動)
 
-		// 移動モーションにする
-		curMotion = MOTION_WALK;
+	//		// 移動量を更新
+	//		m_move.x += sinf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
+	//		m_move.z += cosf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
 
-		if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
-		{ // 左移動の操作も行われた場合 (左手前移動)
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(45) + fCameraRotY;
+	//	}
+	//	else if (pKey->IsPress(DIK_D) || pPad->IsPress(CInputPad::KEY_RIGHT) || pPad->GetPressLStickX() > 0)
+	//	{ // 右移動の操作も行われた場合 (右手前移動)
 
-			// 移動量を更新
-			m_move.x += sinf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
-			m_move.z += cosf(fCameraRotY - (D3DX_PI * 0.75f)) * MOVE * fDeltaRate;
+	//		// 移動量を更新
+	//		m_move.x -= sinf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
+	//		m_move.z -= cosf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
 
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(45) + fCameraRotY;
-		}
-		else if (pKey->IsPress(DIK_D) || pPad->IsPress(CInputPad::KEY_RIGHT) || pPad->GetPressLStickX() > 0)
-		{ // 右移動の操作も行われた場合 (右手前移動)
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(315) + fCameraRotY;
+	//	}
+	//	else
+	//	{ // 手前移動の操作だけが行われた場合 (手前移動)
 
-			// 移動量を更新
-			m_move.x -= sinf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
-			m_move.z -= cosf(fCameraRotY - (D3DX_PI * 0.25f)) * MOVE * fDeltaRate;
+	//		// 移動量を更新
+	//		m_move.x -= sinf(fCameraRotY) * MOVE * fDeltaRate;
+	//		m_move.z -= cosf(fCameraRotY) * MOVE * fDeltaRate;
 
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(315) + fCameraRotY;
-		}
-		else
-		{ // 手前移動の操作だけが行われた場合 (手前移動)
-
-			// 移動量を更新
-			m_move.x -= sinf(fCameraRotY) * MOVE * fDeltaRate;
-			m_move.z -= cosf(fCameraRotY) * MOVE * fDeltaRate;
-
-			// 目標向きを更新
-			m_destRot.y = D3DXToRadian(0) + fCameraRotY;
-		}
-	}
-	else if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
+	//		// 目標向きを更新
+	//		m_destRot.y = D3DXToRadian(0) + fCameraRotY;
+	//	}
+	//}
+	/*else*/ if (pKey->IsPress(DIK_A) || pPad->IsPress(CInputPad::KEY_LEFT) || pPad->GetPressLStickX() < 0)
 	{ // 左移動の操作が行われた場合
-
-		// 移動モーションにする
-		curMotion = MOTION_WALK;
 
 		// 移動量を更新
 		m_move.x += sinf(fCameraRotY - (D3DX_PI * 0.5f)) * MOVE * fDeltaRate;
@@ -531,9 +509,6 @@ CPlayer::EMotion CPlayer::UpdateMove(const float fDeltaTime)
 	else if (pKey->IsPress(DIK_D) || pPad->IsPress(CInputPad::KEY_RIGHT) || pPad->GetPressLStickX() > 0)
 	{ // 右移動の操作が行われた場合
 
-		// 移動モーションにする
-		curMotion = MOTION_WALK;
-
 		// 移動量を更新
 		m_move.x -= sinf(fCameraRotY - (D3DX_PI * 0.5f)) * MOVE * fDeltaRate;
 		m_move.z -= cosf(fCameraRotY - (D3DX_PI * 0.5f)) * MOVE * fDeltaRate;
@@ -541,9 +516,6 @@ CPlayer::EMotion CPlayer::UpdateMove(const float fDeltaTime)
 		// 目標向きを更新
 		m_destRot.y = D3DXToRadian(270) + fCameraRotY;
 	}
-
-	// モーションを返す
-	return curMotion;
 }
 
 //============================================================
@@ -554,6 +526,23 @@ void CPlayer::UpdateGravity(const float fDeltaTime)
 	// 重力を加算
 	float fDeltaRate = fDeltaTime / (1.0f / (float)main::FPS);	// 経過時間の割合
 	m_move.y -= GRAVITY * fDeltaRate;
+}
+
+//============================================================
+//	ジャンプの更新処理
+//============================================================
+void CPlayer::UpdateJump(const float fDeltaTime)
+{
+	CInputKeyboard* pKey = GET_INPUTKEY;	// キーボード情報
+	CInputPad* pPad = GET_INPUTPAD;			// パッド情報
+	if (pKey->IsTrigger(DIK_SPACE) || pPad->IsTrigger(CInputPad::KEY_A))
+	{
+		if (!m_bJump)
+		{
+			m_move.y = 8.0f;
+			m_bJump = true;
+		}
+	}
 }
 
 //============================================================
@@ -610,76 +599,21 @@ void CPlayer::UpdatePosition(VECTOR3* pPos, const float fDeltaTime)
 //============================================================
 void CPlayer::UpdateRotation(VECTOR3* pRot, const float fDeltaTime)
 {
-	float fDeltaRate = fDeltaTime / (1.0f / (float)main::FPS);	// 経過時間の割合
-	float fDiffRot = 0.0f;	// 差分向き
+	//float fDeltaRate = fDeltaTime / (1.0f / (float)main::FPS);	// 経過時間の割合
+	//float fDiffRot = 0.0f;	// 差分向き
 
-	// 目標向きの正規化
-	useful::NormalizeRot(m_destRot.y);
+	//// 目標向きの正規化
+	//useful::NormalizeRot(m_destRot.y);
 
-	// 目標向きまでの差分を計算
-	fDiffRot = m_destRot.y - pRot->y;
+	//// 目標向きまでの差分を計算
+	//fDiffRot = m_destRot.y - pRot->y;
 
-	// 差分向きの正規化
-	useful::NormalizeRot(fDiffRot);
+	//// 差分向きの正規化
+	//useful::NormalizeRot(fDiffRot);
 
-	// 向きの更新
-	pRot->y += fDiffRot * REV_ROTA * fDeltaRate;
+	//// 向きの更新
+	//pRot->y += fDiffRot * REV_ROTA * fDeltaRate;
 
-	// 向きの正規化
-	useful::NormalizeRot(pRot->y);
-}
-
-//============================================================
-//	モーション/キャラクターの更新処理
-//============================================================
-void CPlayer::UpdateMotion(int nMotion, const float fDeltaTime)
-{
-	// 死んでたら抜ける
-	if (IsDeath()) { return; }
-
-	int nAnimMotion = GetMotionType();	// 現在再生中のモーション
-	if (nMotion != NONE_IDX)
-	{ // モーションが設定されている場合
-
-		if (IsMotionLoop())
-		{ // ループするモーション中の場合
-
-			if (nAnimMotion != nMotion)
-			{ // 現在のモーションが再生中のモーションと一致しない場合
-
-				// 現在のモーションの設定
-				SetMotion(nMotion, motion::BLEND_FRAME_OTHER);
-			}
-		}
-		else
-		{ // ループしないモーション中の場合
-
-#if 0
-			switch (GetMotionType())
-			{ // モーションごとの処理
-			case MOTION_:
-
-				if (nMotion != MOTION_IDOL)
-				{ // 待機モーション以外の場合
-
-					// 現在のモーションの設定
-					SetMotion(nMotion, motion::BLEND_FRAME_OTHER);
-				}
-				break;
-			}
-#endif
-		}
-	}
-
-	// オブジェクトキャラクターの更新
-	CObjectChara::Update(fDeltaTime);
-
-	switch (GetMotionType())
-	{ // モーションの種類ごとの処理
-	case MOTION_IDOL:
-		break;
-
-	case MOTION_WALK:
-		break;
-	}
+	//// 向きの正規化
+	//useful::NormalizeRot(pRot->y);
 }
