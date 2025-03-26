@@ -411,6 +411,9 @@
     <ClCompile Include="resource\comboUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="resource\blockFactory.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -748,6 +751,9 @@
     </ClInclude>
     <ClInclude Include="resource\comboUI.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\blockFactory.h">
+      <Filter>ingame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

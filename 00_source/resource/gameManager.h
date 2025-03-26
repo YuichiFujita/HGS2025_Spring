@@ -13,8 +13,9 @@
 //************************************************************
 //	前方宣言
 //************************************************************
-class CGameState;	// ゲーム状態クラス
-class CComboUI;		// コンボUI
+class CGameState;		// ゲーム状態クラス
+class CComboUI;			// コンボUI
+class CBlockFactory;	// ブロックファクトリー
 
 #ifdef SCORE
 class CMultiValue;	// マルチ数字クラス
@@ -62,10 +63,11 @@ private:
 #else TIMER
 	CTimerUI* m_pTimer;		// タイマー情報
 #endif
-	CGameState* m_pState;	// 状態
-	CComboUI* m_pComboUI;	// コンボUI
-	bool m_bControlOK;		// 操作可能フラグ
-	int m_nBaseScore;		// 基礎スコア
+	CGameState* m_pState;			// 状態
+	CComboUI* m_pComboUI;			// コンボUI
+	CBlockFactory* m_pBlockFactory;	// ブロックファクトリー
+	bool m_bControlOK;				// 操作可能フラグ
+	int m_nBaseScore;				// 基礎スコア
 };
 
 #endif	// _GAMEMANAGER_H_
