@@ -10,6 +10,7 @@
 #include "comboUI.h"
 
 #include "multiValue.h"
+#include "manager.h"
 
 //************************************************************
 //	定数宣言
@@ -96,7 +97,20 @@ void CComboUI::Uninit()
 //============================================================
 void CComboUI::Update(const float fDeltaTime)
 {
+#ifdef _DEBUG
 
+	if (GET_INPUTKEY->IsPress(DIK_6))
+	{ // 7キー
+
+		m_pMulti->AddNum(1);
+	}
+	else if(GET_INPUTKEY->IsPress(DIK_7))
+	{ // 8キー
+
+		m_pScore->AddNum(1);
+	}
+
+#endif // _DEBUG
 }
 
 //============================================================
@@ -160,6 +174,9 @@ CComboUI* CComboUI::Create()
 			SAFE_DELETE(pTimeUI);
 			return nullptr;
 		}
+
+		// 情報の設定処理
+		pTimeUI->SetData();
 
 		// 確保したアドレスを返す
 		return pTimeUI;
