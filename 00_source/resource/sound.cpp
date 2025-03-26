@@ -39,10 +39,16 @@ namespace
 	const SSoundInfo SOUND_FILE[] =	// サウンドファイル
 	{
 		SSoundInfo("data\\BGM\\bgm_general.wav", -1),	// BGM
+		SSoundInfo("data\\BGM\\bgm000.wav", -1),		// タイトル
+		SSoundInfo("data\\BGM\\bgm001.wav", -1),		// ゲーム
+		SSoundInfo("data\\BGM\\bgm002.wav", -1),		// リザルト
 		SSoundInfo("data\\SE\\jump000.wav", 0),			// ジャンプ
 		SSoundInfo("data\\SE\\shot000.wav", 0),			// 射撃
 		SSoundInfo("data\\SE\\explosion000.wav", 0),	// 爆発
 		SSoundInfo("data\\SE\\death000.wav", 0),		// 死亡
+		SSoundInfo("data\\SE\\title.wav", 0),			// タイトル
+		SSoundInfo("data\\SE\\select000.wav", 0),		// 選択音
+		SSoundInfo("data\\SE\\decision000.wav", 0),		// 決定音
 	};
 }
 

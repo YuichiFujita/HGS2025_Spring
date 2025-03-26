@@ -67,7 +67,7 @@ HRESULT CSceneResult::Init()
 #endif
 
 	// BGMÇÃçƒê∂
-	PLAY_SOUND(CSound::LABEL_BGM_GENERAL);
+	PLAY_SOUND(CSound::LABEL_BGM_RESULT);
 
 	return S_OK;
 }

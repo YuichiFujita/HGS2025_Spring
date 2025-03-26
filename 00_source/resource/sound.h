@@ -28,10 +28,16 @@ public:
 	{
 		LABEL_NONE = NONE_IDX,	// ラベル無し
 		LABEL_BGM_GENERAL,		// BGM (汎用)
+		LABEL_BGM_TITLE,		// タイトル
+		LABEL_BGM_GAME,			// ゲーム
+		LABEL_BGM_RESULT,		// リザルト
 		LABEL_SE_JUMP,			// ジャンプ
 		LABEL_SE_SHOT,			// 射撃
 		LABEL_SE_EXPLOSION,		// 爆発
 		LABEL_SE_DEATH,			// 死亡
+		LABEL_SE_TITLE,			// タイトル
+		LABEL_SE_SELECT,		// 選択音
+		LABEL_SE_DESITION,		// 決定音
 		LABEL_MAX				// この列挙型の総数
 	};
 

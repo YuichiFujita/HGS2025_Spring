@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "fade.h"
 #include "object2D.h"
+#include "sound.h"
 
 //************************************************************
 //	定数宣言
@@ -185,6 +186,8 @@ void CTitleStateSelect::UpdateSelect()
 
 		// 経過時間を初期化
 		m_fCurTime = 0.0f;
+
+		PLAY_SOUND(CSound::LABEL_SE_SELECT);
 	}
 	if (pKey->IsTrigger(DIK_RIGHT) ||
 		pPad->IsTrigger(CInputPad::KEY_RIGHT))
@@ -194,6 +197,8 @@ void CTitleStateSelect::UpdateSelect()
 
 		// 経過時間を初期化
 		m_fCurTime = 0.0f;
+
+		PLAY_SOUND(CSound::LABEL_SE_SELECT);
 	}
 
 	// 前回の選択要素の色を白色に設定
@@ -240,6 +245,8 @@ void CTitleStateSelect::UpdateDecide()
 			assert(false);
 			break;
 		}
+
+		PLAY_SOUND(CSound::LABEL_SE_DESITION);
 	}
 }
 
