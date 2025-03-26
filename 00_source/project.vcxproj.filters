@@ -420,6 +420,12 @@
     <ClCompile Include="resource\gameStateEnd.cpp">
       <Filter>state\game</Filter>
     </ClCompile>
+    <ClCompile Include="resource\gameStateStart.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\start.cpp">
+      <Filter>outgame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -766,6 +772,12 @@
     </ClInclude>
     <ClInclude Include="resource\gameStateEnd.h">
       <Filter>state\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gameStateStart.h">
+      <Filter>state\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\start.h">
+      <Filter>outgame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

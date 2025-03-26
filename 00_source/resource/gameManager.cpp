@@ -111,8 +111,8 @@ HRESULT CGameManager::Init()
 	m_nBaseScore = 0;		// 基礎スコア
 	m_pComboUI	 = nullptr;	// コンボUI
 
-	// 通常状態にする
-	ChangeState(new CGameStateNormal);
+	// 開始状態にする
+	ChangeState(new CGameStateStart);
 
 #ifdef SCORE
 	// スコアの生成

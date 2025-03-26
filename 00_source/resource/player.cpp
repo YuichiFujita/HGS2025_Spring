@@ -356,7 +356,7 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 			rPos,
 			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT * 0.5f, 0.0f),
 			GetVec3Size().x * 0.5f,
-			rBlock->GetVec3Size().x * 0.5f
+			rBlock->GetVec3Size().x * 0.35f
 		);
 		if (bHit)
 		{ // “–‚½‚Á‚½ê‡
