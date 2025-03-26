@@ -20,6 +20,7 @@
 #include "gameManager.h"
 #include "block.h"
 #include "bullet.h"
+#include "comboArea.h"
 #include "collision.h"
 
 //************************************************************
@@ -80,10 +81,12 @@ CPlayer::CPlayer() : CObject3D(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY)
 	m_move		 (VEC3_ZERO),	// 移動量
 	m_state		 (STATE_NONE),	// 状態
 	m_bRight	 (false),		// 左右フラグ
-	m_bJump		 (false),		// ジャンプ状況
+	m_bJump		 (false),		// 現在ジャンプ状況
+	m_bOldJump	 (false),		// 過去ジャンプ状況
 	m_bJumpPress (false),		// ジャンプ操作フラグ
 	m_fJumpTimer (0.0f),		// ジャンプ操作時間
-	m_fShotTimer (0.0f)			// 攻撃インターバル
+	m_fShotTimer (0.0f),		// 攻撃インターバル
+	m_fMaxMulti	 (0.0f)			// ジャンプ中の最高倍率
 {
 	// スタティックアサート
 	static_assert(NUM_ARRAY(m_aFuncState) == CPlayer::STATE_MAX, "ERROR : State Count Mismatch");
@@ -108,9 +111,11 @@ HRESULT CPlayer::Init()
 	m_state		 = STATE_NORMAL;	// 状態
 	m_bRight	 = false;			// 左右フラグ
 	m_bJump		 = true;			// ジャンプ状況
+	m_bOldJump	 = true;			// 過去ジャンプ状況
 	m_bJumpPress = false;			// ジャンプ操作フラグ
 	m_fJumpTimer = 0.0f;			// ジャンプ操作時間
 	m_fShotTimer = 0.0f;			// 攻撃インターバル
+	m_fMaxMulti	 = 0.0f;			// ジャンプ中の最高倍率
 
 	// オブジェクトキャラクターの初期化
 	if (FAILED(CObject3D::Init()))
@@ -177,6 +182,9 @@ void CPlayer::Update(const float fDeltaTime)
 {
 	// 過去位置の更新
 	UpdateOldPosition();
+
+	// 過去ジャンプ状況の更新
+	m_bOldJump = m_bJump;
 
 	// 状態の更新
 	(this->*(m_aFuncState[m_state]))(fDeltaTime);
@@ -328,7 +336,7 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 		bool bHit = collision::BoxXY
 		( // 引数
 			rPos,
-			rBlock->GetVec3Position(),
+			rBlock->GetVec3Position() - VECTOR3(0.0f, HEIGHT, 0.0f),
 			GetVec3Size() * 0.5f,
 			GetVec3Size() * 0.5f,
 			rBlock->GetVec3Size() * 0.5f,
@@ -344,6 +352,56 @@ bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 	}
 
 	return false;
+}
+
+//============================================================
+//	倍率エリアとの当たり判定
+//============================================================
+void CPlayer::CollisionMulti(const VECTOR3& rPos)
+{
+	// ジャンプ中ではない場合抜ける
+	if (!m_bJump) { return; }
+
+	// 倍率エリアがない場合抜ける
+	CListManager<CComboArea>* pList = CComboArea::GetList();
+	if (pList == nullptr) { return; }
+
+	// 内部リストを取得
+	std::list<CComboArea*> listArea = pList->GetList();
+
+	float fMaxMulti = 0.0f;	// 最高倍率
+	for (const auto& rArea : listArea)
+	{ // 要素数分繰り返す
+
+		// XY平面の当たり判定
+		bool bHit = collision::BoxXY
+		( // 引数
+			rPos,
+			rArea->GetVec3Position(),
+			GetVec3Size() * 0.5f,
+			GetVec3Size() * 0.5f,
+			rArea->GetVec3Size() * 0.5f,
+			rArea->GetVec3Size() * 0.5f
+		);
+
+		// 当たっていない場合次へ
+		if (!bHit) { continue; }
+
+		const float fCurMulti = rArea->GetMulti();	// エリア倍率
+		if (fMaxMulti < fCurMulti)
+		{ // より大きい倍率があった場合
+
+			// 倍率を更新
+			fMaxMulti = fCurMulti;
+		}
+	}
+
+	if (fMaxMulti > m_fMaxMulti)
+	{ // 倍率が現在の最大倍率を上回った場合
+
+		// 倍率を更新
+		m_fMaxMulti = fMaxMulti;
+	}
 }
 
 //============================================================
@@ -406,6 +464,9 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	// 位置更新
 	UpdatePosition(&posPlayer, fDeltaTime);
 
+	// 倍率エリアとの当たり判定
+	CollisionMulti(posPlayer);
+
 	// 着地判定
 	UpdateLanding(&posPlayer, fDeltaTime);
 
@@ -427,6 +488,8 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
+
+	GET_MANAGER->GetDebugProc()->Print(CDebugProc::POINT_RIGHT, "スコア倍率：[%f]\n", m_fMaxMulti);
 }
 
 //============================================================
@@ -640,6 +703,20 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 	||  pStage->LandLimitPosition(*pPos, m_move, 0.0f))
 	{ // プレイヤーが着地していた場合
 
+		CGameManager* pGameManager = CSceneGame::GetGameManager();	// ゲームマネージャー
+		if (pGameManager != nullptr)
+		{ // ゲームマネージャーがある場合
+
+			// スコアを加算
+			pGameManager->AddScore((int)((float)pGameManager->GetBaseScore() * m_fMaxMulti));
+			if (m_bOldJump)
+			{ // 前フレームで着地していない場合
+
+				// 基礎スコアを初期化
+				pGameManager->InitBaseScore();
+			}
+		}
+
 		// 着地している状態にする
 		bLand = true;
 
@@ -651,6 +728,9 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 
 		// 攻撃インターバルを初期化
 		m_fShotTimer = 0.0f;
+
+		// 倍率を初期化
+		m_fMaxMulti = 0.0f;
 	}
 
 	// 着地フラグを返す

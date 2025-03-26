@@ -61,6 +61,7 @@ public:
 	inline VECTOR3 GetMove() const				{ return m_move; }		// 移動量取得
 	inline void SetEnableJump(const bool bJump)	{ m_bJump = bJump; }	// ジャンプ状況設定
 	inline bool IsJump() const					{ return m_bJump; }		// ジャンプ状況設定
+	inline float GetCurMulti() const			{ return m_fMaxMulti; }	// 現在のスコア倍率取得
 
 private:
 	// エイリアス定義
@@ -71,6 +72,7 @@ private:
 
 	// メンバ関数
 	bool CollisionBlock(const VECTOR3& rPos);		// ブロックとの当たり判定
+	void CollisionMulti(const VECTOR3& rPos);		// 倍率エリアとの当たり判定
 	void UpdateNone(const float fDeltaTime);		// 何もしない状態時の更新
 	void UpdateNormal(const float fDeltaTime);		// 通常状態時の更新
 	void UpdateDeath(const float fDeltaTime);		// 死亡状態時の更新
@@ -92,10 +94,12 @@ private:
 	VECTOR3	m_move;			// 移動量
 	EState	m_state;		// 状態
 	bool	m_bRight;		// 左右フラグ
-	bool	m_bJump;		// ジャンプ状況
+	bool	m_bJump;		// 現在ジャンプ状況
+	bool	m_bOldJump;		// 過去ジャンプ状況
 	bool	m_bJumpPress;	// ジャンプ操作フラグ
 	float	m_fJumpTimer;	// ジャンプ操作時間
 	float	m_fShotTimer;	// 攻撃インターバル
+	float	m_fMaxMulti;	// ジャンプ中の最高倍率
 };
 
 #endif	// _PLAYER_H_

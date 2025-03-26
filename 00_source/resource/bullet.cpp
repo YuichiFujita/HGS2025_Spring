@@ -8,8 +8,9 @@
 //	インクルードファイル
 //************************************************************
 #include "bullet.h"
-
 #include "block.h"
+#include "sceneGame.h"
+#include "gameManager.h"
 
 //************************************************************
 //	定数宣言
@@ -209,7 +210,7 @@ void CBullet::SetMove(const bool bRight)
 void CBullet::BlockCollision(void)
 {
 	VECTOR3 pos = GetVec3Position();
-	VECTOR3 size = GetVec3Size();
+	VECTOR3 size = GetVec3Size() * 0.5f;
 
 	// ブロックがない場合抜ける
 	CListManager<CBlock>* pList = CBlock::GetList();
@@ -224,7 +225,17 @@ void CBullet::BlockCollision(void)
 		{ // ブロックに当たった場合
 
 			// ヒット処理
-			pBlock->Hit();
+			if (pBlock->Hit())
+			{ // 崩せた場合
+
+				CGameManager* pGameManager = CSceneGame::GetGameManager();	// ゲームマネージャー
+				if (pGameManager != nullptr)
+				{ // ゲームマネージャーがある場合
+
+					// 基礎スコアを加算
+					pGameManager->AddBaseScore(1);	// TODO：固定値のスコア加算で(●｀･ω･)ゞ＜ok？
+				}
+			}
 		}
 	}
 }

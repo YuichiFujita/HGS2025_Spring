@@ -54,7 +54,7 @@ public:
 
 	// メンバ関数
 	virtual bool Collision(const VECTOR3& rPos, const VECTOR3& rSize);		// 当たり判定
-	virtual void Hit() = 0;				// ヒット処理
+	virtual bool Hit() = 0;				// ヒット処理
 
 private:
 
