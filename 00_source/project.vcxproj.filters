@@ -408,6 +408,9 @@
     <ClCompile Include="resource\comboArea.cpp">
       <Filter>ingame</Filter>
     </ClCompile>
+    <ClCompile Include="resource\comboUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -742,6 +745,9 @@
     </ClInclude>
     <ClInclude Include="resource\comboArea.h">
       <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\comboUI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

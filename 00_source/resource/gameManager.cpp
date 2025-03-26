@@ -15,6 +15,7 @@
 
 #include "block.h"
 #include "comboArea.h"
+#include "comboUI.h"
 
 #ifdef SCORE
 #include "multiValue.h"
@@ -78,7 +79,8 @@ CGameManager::CGameManager() :
 #endif
 	m_pState	 (nullptr),	// 状態
 	m_bControlOK (false),	// 操作可能フラグ
-	m_nBaseScore (0)		// 基礎スコア
+	m_nBaseScore (0),		// 基礎スコア
+	m_pComboUI	 (nullptr)	// コンボUI
 {
 
 }
@@ -105,6 +107,7 @@ HRESULT CGameManager::Init()
 	m_pState	 = nullptr;	// 状態
 	m_bControlOK = true;	// 操作可能フラグ
 	m_nBaseScore = 0;		// 基礎スコア
+	m_pComboUI	 = nullptr;	// コンボUI
 
 	// 通常状態にする
 	ChangeState(new CGameStateNormal);
@@ -149,6 +152,9 @@ HRESULT CGameManager::Init()
 	// タイマーの計測開始
 	m_pTimer->Start();
 #endif
+
+	// コンボUIを生成
+	m_pComboUI = CComboUI::Create();
 
 	// プレイヤーの生成
 	if (CPlayer::Create(VEC3_ZERO, VEC3_ZERO) == nullptr)

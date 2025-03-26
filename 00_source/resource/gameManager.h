@@ -14,6 +14,7 @@
 //	前方宣言
 //************************************************************
 class CGameState;	// ゲーム状態クラス
+class CComboUI;		// コンボUI
 
 #ifdef SCORE
 class CMultiValue;	// マルチ数字クラス
@@ -60,6 +61,7 @@ private:
 	CTimerUI* m_pTimer;		// タイマー情報
 #endif
 	CGameState* m_pState;	// 状態
+	CComboUI* m_pComboUI;	// コンボUI
 	bool m_bControlOK;		// 操作可能フラグ
 	int m_nBaseScore;		// 基礎スコア
 };

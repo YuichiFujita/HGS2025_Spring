@@ -213,8 +213,8 @@ bool CBlock::Collision(const VECTOR3& rPos, const VECTOR3& rSize)
 {
 	// ÉuÉçÉbÉNÇ∆ÇÃìñÇΩÇËîªíË
 	VECTOR3 posBlock = GetVec3Position();
-	VECTOR3 sizeBlock = GetVec3Size();
-	return collision::BoxXY(posBlock, rPos, sizeBlock, rSize, -sizeBlock, -rSize);
+	VECTOR3 sizeBlock = GetVec3Size() * 0.5f;
+	return collision::BoxXY(posBlock, rPos, sizeBlock, sizeBlock, rSize, rSize);
 }
 
 //============================================================
