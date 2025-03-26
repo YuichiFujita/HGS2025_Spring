@@ -41,7 +41,7 @@ HRESULT CTitleManager::Init()
 	m_pState = nullptr;	// ó‘Ô
 
 	// ƒƒS•\¦ó‘Ô‚É‚·‚é
-	ChangeState(new CTitleStateLogo);
+	ChangeState(new CTitleStateSelect);
 
 	// ¶¬ˆ—
 	CComboAreaManager::Create();
