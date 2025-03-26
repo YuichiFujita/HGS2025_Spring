@@ -467,6 +467,9 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	// 倍率エリアとの当たり判定
 	CollisionMulti(posPlayer);
 
+	// コンボ倍率の設定
+	CSceneGame::GetGameManager()->SetComboValue(m_fMaxMulti);
+
 	// 着地判定
 	UpdateLanding(&posPlayer, fDeltaTime);
 

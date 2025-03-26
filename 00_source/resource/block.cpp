@@ -116,8 +116,8 @@ void CBlock::Update(const float fDeltaTime)
 	// 移動処理
 	Move();
 
-	// 頂点座標の設定処理
-	SetVtx();
+	// オブジェクト3Dの更新
+	CObject3D::Update(fDeltaTime);
 }
 
 //============================================================
