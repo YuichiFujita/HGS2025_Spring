@@ -18,7 +18,9 @@
 #include "stage.h"
 #include "sceneGame.h"
 #include "gameManager.h"
+#include "block.h"
 #include "bullet.h"
+#include "collision.h"
 
 //************************************************************
 //	マクロ定義
@@ -308,21 +310,40 @@ CPlayer::EState CPlayer::GetState() const
 }
 
 //============================================================
-//	半径取得処理
+//	ブロックとの当たり判定
 //============================================================
-float CPlayer::GetRadius() const
+bool CPlayer::CollisionBlock(const VECTOR3& rPos)
 {
-	// 半径を返す
-	return RADIUS;
-}
+	// ブロックがない場合抜ける
+	CListManager<CBlock>* pList = CBlock::GetList();
+	if (pList == nullptr) { return false; }
 
-//============================================================
-//	縦幅取得処理
-//============================================================
-float CPlayer::GetHeight() const
-{
-	// 縦幅を返す
-	return HEIGHT;
+	// 内部リストを取得
+	std::list<CBlock*> listBlock = pList->GetList();
+
+	for (const auto& rBlock : listBlock)
+	{ // 要素数分繰り返す
+
+		// XY平面の当たり判定
+		bool bHit = collision::BoxXY
+		( // 引数
+			rPos,
+			rBlock->GetVec3Position(),
+			GetVec3Size() * 0.5f,
+			GetVec3Size() * 0.5f,
+			rBlock->GetVec3Size() * 0.5f,
+			rBlock->GetVec3Size() * 0.5f
+		);
+		if (bHit)
+		{ // 当たった場合
+
+			// ヒット処理
+			Hit();
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //============================================================
@@ -391,6 +412,9 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	// 位置補正
 	CStage* pStage = GET_MANAGER->GetStage();	// ステージ情報
 	pStage->LimitPosition(posPlayer, RADIUS);
+
+	// ブロックとの当たり判定
+	CollisionBlock(posPlayer);
 
 	// 攻撃の更新
 	UpdateShot(posPlayer, fDeltaTime);

@@ -57,8 +57,6 @@ public:
 	bool Hit();	// ヒット
 	void SetState(const EState state);	// 状態設定
 	EState GetState() const;			// 状態取得
-	float GetRadius() const;			// 半径取得
-	float GetHeight() const;			// 縦幅取得
 	inline void SetMove(const VECTOR3& rMove)	{ m_move = rMove; }		// 移動量設定
 	inline VECTOR3 GetMove() const				{ return m_move; }		// 移動量取得
 	inline void SetEnableJump(const bool bJump)	{ m_bJump = bJump; }	// ジャンプ状況設定
@@ -72,6 +70,7 @@ private:
 	static AFuncState m_aFuncState[];	// 状態更新関数リスト
 
 	// メンバ関数
+	bool CollisionBlock(const VECTOR3& rPos);		// ブロックとの当たり判定
 	void UpdateNone(const float fDeltaTime);		// 何もしない状態時の更新
 	void UpdateNormal(const float fDeltaTime);		// 通常状態時の更新
 	void UpdateDeath(const float fDeltaTime);		// 死亡状態時の更新
