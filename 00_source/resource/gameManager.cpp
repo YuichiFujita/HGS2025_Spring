@@ -16,6 +16,7 @@
 #include "block.h"
 #include "comboArea.h"
 #include "comboUI.h"
+#include "blockFactory.h"
 
 #ifdef SCORE
 #include "multiValue.h"
@@ -73,14 +74,15 @@ namespace
 //============================================================
 CGameManager::CGameManager() :
 #ifdef SCORE
-	m_pScore	 (nullptr),	// スコア情報
+	m_pScore	 (nullptr),		// スコア情報
 #else TIMER
-	m_pTimer	 (nullptr),	// タイマー情報
+	m_pTimer	 (nullptr),		// タイマー情報
 #endif
-	m_pState	 (nullptr),	// 状態
-	m_bControlOK (false),	// 操作可能フラグ
-	m_nBaseScore (0),		// 基礎スコア
-	m_pComboUI	 (nullptr)	// コンボUI
+	m_pState	 (nullptr),		// 状態
+	m_pComboUI(nullptr),		// コンボUI
+	m_pBlockFactory(nullptr),	// ブロックファクトリー
+	m_bControlOK (false),		// 操作可能フラグ
+	m_nBaseScore (0)			// 基礎スコア
 {
 
 }
@@ -156,6 +158,9 @@ HRESULT CGameManager::Init()
 	// コンボUIを生成
 	m_pComboUI = CComboUI::Create();
 
+	// ブロックファクトリーを生成
+	m_pBlockFactory = CBlockFactory::Create();
+
 	// プレイヤーの生成
 	if (CPlayer::Create(VEC3_ZERO, VEC3_ZERO) == nullptr)
 	{ // 生成に失敗した場合
@@ -164,9 +169,9 @@ HRESULT CGameManager::Init()
 		return E_FAIL;
 	}
 
-	for (int nCnt = 1; nCnt < comboarea::MAX_MULTI + 1; nCnt++)
+	for (int nCnt = 0; nCnt < comboarea::MAX_MULTI; nCnt++)
 	{
-		CComboArea::Create(comboarea::POS[nCnt - 1], nCnt);
+		CComboArea::Create(comboarea::POS[nCnt], nCnt);
 	}
 
 	return S_OK;

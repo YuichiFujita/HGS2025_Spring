@@ -182,9 +182,9 @@ CComboArea* CComboArea::Create
 		pBlock->m_nIdx = nMul;
 
 		// テクスチャの割り当て処理
-		pBlock->BindTexture(TEXTURE[nMul - 1].c_str());
+		pBlock->BindTexture(TEXTURE[nMul].c_str());
 
-		pBlock->SetColor(COL[nMul - 1]);
+		pBlock->SetColor(COL[nMul]);
 
 		// 確保したアドレスを返す
 		return pBlock;
