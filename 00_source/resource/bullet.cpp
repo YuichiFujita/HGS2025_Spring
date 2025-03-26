@@ -211,8 +211,12 @@ void CBullet::BlockCollision(void)
 	VECTOR3 pos = GetVec3Position();
 	VECTOR3 size = GetVec3Size();
 
+	// ブロックがない場合抜ける
+	CListManager<CBlock>* pList = CBlock::GetList();
+	if (pList == nullptr) { return; }
+
 	// ブロックのリストを取得
-	std::list<CBlock*> list = CBlock::GetList()->GetList();
+	std::list<CBlock*> list = pList->GetList();
 
 	for (auto pBlock : list)
 	{
