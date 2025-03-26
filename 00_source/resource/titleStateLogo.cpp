@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "fade.h"
 #include "object2D.h"
+#include "sound.h"
 
 //************************************************************
 //	’è”éŒ¾

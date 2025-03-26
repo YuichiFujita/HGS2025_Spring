@@ -469,12 +469,16 @@ void CResultManager::UpdateSelect()
 	{
 		// 左に選択をずらす
 		m_nCurSelect = (m_nCurSelect + 1) % SELECT_MAX;
+
+		PLAY_SOUND(CSound::LABEL_SE_SELECT);
 	}
 	if (pKey->IsTrigger(DIK_RIGHT) ||
 		pPad->IsTrigger(CInputPad::KEY_RIGHT))
 	{
 		// 右に選択をずらす
 		m_nCurSelect = (m_nCurSelect + (SELECT_MAX - 1)) % SELECT_MAX;
+
+		PLAY_SOUND(CSound::LABEL_SE_SELECT);
 	}
 
 	// 前回の選択要素の色を白色に設定
@@ -510,6 +514,8 @@ void CResultManager::UpdateDecide()
 			assert(false);
 			break;
 		}
+
+		PLAY_SOUND(CSound::LABEL_SE_DESITION);
 	}
 }
 
