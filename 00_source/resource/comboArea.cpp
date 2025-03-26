@@ -147,7 +147,7 @@ CComboArea* CComboArea::Create
 )
 {
 	// コンボの最大値を超えた場合、停止
-	assert(nMul - 1 < NUM_ARRAY(TEXTURE));
+	assert(nMul < NUM_ARRAY(TEXTURE));
 
 	// コンボエリアの生成
 	CComboArea* pBlock = new CComboArea;
