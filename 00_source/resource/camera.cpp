@@ -43,9 +43,10 @@ namespace
 		const float REV_ROT		= 1.0f;		// カメラ向きの補正係数
 	}
 
-	// 追従カメラ情報
-	namespace follow
+	// ゲームカメラ情報
+	namespace game
 	{
+		const VECTOR3 POSR		= VECTOR3(0.0f, 300.0f, 0.0f);	// 注視点位置
 		const VECTOR3 ROT		= VECTOR3(HALF_PI, 0.0f, 0.0f);	// 向き
 		const float DISTANCE	= 100.0f;	// 追従カメラの距離
 		const float REV_POS		= 1.0f;		// カメラ位置の補正係数
@@ -67,13 +68,13 @@ namespace
 CCamera::AFuncState CCamera::m_aFuncState[] =	// 状態更新関数リスト
 {
 	&CCamera::UpdateNone,		// 固定状態の更新
-	&CCamera::UpdateFollow,		// 追従状態の更新
+	&CCamera::UpdateGame,		// ゲーム状態の更新
 	&CCamera::UpdateControl,	// 操作状態の更新
 };
 CCamera::AFuncInit CCamera::m_aFuncInit[] =	// 状態初期化関数リスト
 {
 	&CCamera::InitNone,		// 固定状態の初期化
-	&CCamera::InitFollow,	// 追従状態の初期化
+	&CCamera::InitGame,		// ゲーム状態の初期化
 	&CCamera::InitControl,	// 操作状態の初期化
 };
 
@@ -181,15 +182,32 @@ void CCamera::SetCamera()
 	// プロジェクションマトリックスの初期化
 	m_camera.mtxProj.Identity();
 
-	// 透視投影でプロジェクションマトリックスを作成
-	D3DXMatrixPerspectiveFovLH
-	( // 引数
-		&m_camera.mtxProj,	// プロジェクションマトリックス
-		basic::VIEW_ANGLE,	// 視野角
-		basic::VIEW_ASPECT,	// 画面のアスペクト比
-		basic::VIEW_NEAR,	// Z軸の最小値
-		basic::VIEW_FAR		// Z軸の最大値
-	);
+	if (m_state == STATE_CONTROL)
+	{ // 操作カメラの場合
+
+		// 透視投影でプロジェクションマトリックスを作成
+		D3DXMatrixPerspectiveFovLH
+		( // 引数
+			&m_camera.mtxProj,	// プロジェクションマトリックス
+			basic::VIEW_ANGLE,	// 視野角
+			basic::VIEW_ASPECT,	// 画面のアスペクト比
+			basic::VIEW_NEAR,	// Z軸の最小値
+			basic::VIEW_FAR		// Z軸の最大値
+		);
+	}
+	else
+	{ // 別カメラの場合
+
+		// 平行投影でプロジェクションマトリックスを作成
+		D3DXMatrixOrthoLH
+		( // 引数
+			&m_camera.mtxProj,		// プロジェクションマトリックス
+			(float)SCREEN_WIDTH,	// 投影する横幅
+			(float)SCREEN_HEIGHT,	// 投影する縦幅
+			basic::VIEW_NEAR,		// Z軸の最小値
+			basic::VIEW_FAR			// Z軸の最大値
+		);
+	}
 
 	// プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_camera.mtxProj);
@@ -423,11 +441,37 @@ void CCamera::InitNone()
 }
 
 //============================================================
-//	追従カメラ初期化処理
+//	ゲームカメラ初期化処理
 //============================================================
-void CCamera::InitFollow()
+void CCamera::InitGame()
 {
+	// カメラゲーム状態ではない場合抜ける
+	if (m_state != STATE_GAME) { return; }
 
+	//----------------------------------------------------
+	//	向きの更新
+	//----------------------------------------------------
+	// 向きの設定
+	m_camera.rot = m_camera.destRot = game::ROT;
+	useful::NormalizeRot(m_camera.rot);		// 現在向きを正規化
+	useful::NormalizeRot(m_camera.destRot);	// 目標向きを正規化
+
+	//----------------------------------------------------
+	//	距離の更新
+	//----------------------------------------------------
+	// 距離の設定
+	m_camera.fDis = m_camera.fDestDis = game::DISTANCE;
+
+	//----------------------------------------------------
+	//	位置の更新
+	//----------------------------------------------------
+	// 注視点の設定
+	m_camera.posR = m_camera.destPosR = game::POSR;
+
+	// 視点の設定
+	m_camera.posV.x = m_camera.destPosV.x = m_camera.destPosR.x + ((-m_camera.fDis * sinf(m_camera.rot.x)) * sinf(m_camera.rot.y));
+	m_camera.posV.y = m_camera.destPosV.y = m_camera.destPosR.y + ((-m_camera.fDis * cosf(m_camera.rot.x)));
+	m_camera.posV.z = m_camera.destPosV.z = m_camera.destPosR.z + ((-m_camera.fDis * sinf(m_camera.rot.x)) * cosf(m_camera.rot.y));
 }
 
 //============================================================
@@ -493,12 +537,12 @@ void CCamera::UpdateNone(const float fDeltaTime)
 }
 
 //============================================================
-//	追従カメラの更新処理
+//	ゲームカメラの更新処理
 //============================================================
-void CCamera::UpdateFollow(const float fDeltaTime)
+void CCamera::UpdateGame(const float fDeltaTime)
 {
-	// カメラ追従状態ではない場合抜ける
-	if (m_state != STATE_FOLLOW) { return; }
+	// カメラゲーム状態ではない場合抜ける
+	if (m_state != STATE_GAME) { return; }
 
 	//----------------------------------------------------
 	//	向きの更新
@@ -506,7 +550,7 @@ void CCamera::UpdateFollow(const float fDeltaTime)
 	VECTOR3 diffRot = VEC3_ZERO;	// 差分向き
 
 	// 目標向きの設定
-	m_camera.destRot = none::ROT;
+	m_camera.destRot = game::ROT;
 	useful::NormalizeRot(m_camera.destRot);	// 目標向きを正規化
 
 	// 差分向きの計算
@@ -514,14 +558,14 @@ void CCamera::UpdateFollow(const float fDeltaTime)
 	useful::NormalizeRot(diffRot);			// 差分向きを正規化
 
 	// 現在向きの更新
-	m_camera.rot += diffRot * none::REV_ROT;
+	m_camera.rot += diffRot * game::REV_ROT;
 	useful::NormalizeRot(m_camera.rot);		// 現在向きを正規化
 
 	//----------------------------------------------------
 	//	距離の更新
 	//----------------------------------------------------
 	// 距離の設定
-	m_camera.fDis = m_camera.fDestDis = none::DISTANCE;
+	m_camera.fDis = m_camera.fDestDis = game::DISTANCE;
 
 	//----------------------------------------------------
 	//	位置の更新
@@ -530,7 +574,7 @@ void CCamera::UpdateFollow(const float fDeltaTime)
 	VECTOR3 diffPosR = VEC3_ZERO;	// 注視点の差分位置
 
 	// 注視点の更新
-	m_camera.destPosR = none::POSR;
+	m_camera.destPosR = game::POSR;
 
 	// 視点の更新
 	m_camera.destPosV.x = m_camera.destPosR.x + ((-m_camera.fDis * sinf(m_camera.rot.x)) * sinf(m_camera.rot.y));
@@ -542,9 +586,8 @@ void CCamera::UpdateFollow(const float fDeltaTime)
 	diffPosV = m_camera.destPosV - m_camera.posV;	// 視点
 
 	// 現在位置を更新
-	m_camera.posR += diffPosR * none::REV_POS;	// 注視点
-	m_camera.posV += diffPosV * none::REV_POS;	// 視点
-
+	m_camera.posR += diffPosR * game::REV_POS;	// 注視点
+	m_camera.posV += diffPosV * game::REV_POS;	// 視点
 }
 
 //============================================================
