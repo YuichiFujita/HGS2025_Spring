@@ -22,7 +22,8 @@ namespace
 	// コンボ関係
 	namespace combo
 	{
-		const int DIGIT = 2;	// 桁数
+		const int DIGIT = 2;			// 桁数
+		const int CONVERT_MULTI = 10;	// 整数変換時の倍率
 		const VECTOR3 POS = VECTOR3(1000.0f, 50.0f, 0.0f);			// 位置
 		const VECTOR3 SIZE = VECTOR3(30.0f, 45.0f, 0.0f);			// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
@@ -149,6 +150,22 @@ void CComboUI::SetData()
 		score::SPACE				// 余白
 	);
 	m_pScore->SetLabel(CObject::LABEL_NONE);
+}
+
+//============================================================
+// 倍率数値の設定処理
+//============================================================
+void CComboUI::SetMultiValue(const float fMulti)
+{
+	m_pMulti->SetNum((int)(fMulti * combo::CONVERT_MULTI));
+}
+
+//============================================================
+// スコア数値の設定処理
+//============================================================
+void CComboUI::SetScoreValue(const int nScore)
+{
+	m_pScore->SetNum(nScore);
 }
 
 //============================================================

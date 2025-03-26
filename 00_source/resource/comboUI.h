@@ -41,6 +41,8 @@ public:
 	void Draw(CShader* pShader = nullptr) override;		// 描画
 	
 	void SetData();				// 情報の設定処理
+	void SetMultiValue(const float fMulti);		// 倍率数値の設定処理
+	void SetScoreValue(const int nScore);		// スコア数値の設定処理
 
 	// 静的メンバ関数
 	static CComboUI* Create();	// 生成
