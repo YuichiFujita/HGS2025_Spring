@@ -1,39 +1,36 @@
 //============================================================
 //
-//	ブロック処理 [block.cpp]
+//	銃弾処理 [bullet.cpp]
 //	Author：小原立暉
 //
 //============================================================
 //************************************************************
 //	インクルードファイル
 //************************************************************
-#include "block.h"
-
-#include "blockBreak.h"
+#include "bullet.h"
 
 //************************************************************
 //	定数宣言
 //************************************************************
 namespace
 {
-	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(50.0f, 25.0f, 0.0f);		// 半径
+	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(10.0f, 10.0f, 0.0f);		// 半径
+	const float SPEED = 4.0f;		// 速度
 }
 
 //************************************************************
 //	静的メンバ変数宣言
 //************************************************************
-CListManager<CBlock>* CBlock::m_pList = nullptr;	// オブジェクトリスト
+CListManager<CBullet>* CBullet::m_pList = nullptr;	// オブジェクトリスト
 
 //************************************************************
-//	子クラス [CBlock] のメンバ関数
+//	子クラス [CBullet] のメンバ関数
 //************************************************************
 //============================================================
 //	コンストラクタ
 //============================================================
-CBlock::CBlock() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
-m_type(CBlock::TYPE_BREAK),		// 種類
-m_bRight(true),					// 右側状況
-m_fSpeed(0.0f)					// 速度
+CBullet::CBullet() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 5),
+m_bRight(true)					// 右側状況
 {
 
 }
@@ -41,7 +38,7 @@ m_fSpeed(0.0f)					// 速度
 //============================================================
 //	デストラクタ
 //============================================================
-CBlock::~CBlock()
+CBullet::~CBullet()
 {
 
 }
@@ -49,7 +46,7 @@ CBlock::~CBlock()
 //============================================================
 //	初期化処理
 //============================================================
-HRESULT CBlock::Init()
+HRESULT CBullet::Init()
 {
 	// オブジェクト3Dの初期化
 	if (FAILED(CObject3D::Init()))
@@ -64,7 +61,7 @@ HRESULT CBlock::Init()
 	{ // リストマネージャーが存在しない場合
 
 		// リストマネージャーの生成
-		m_pList = CListManager<CBlock>::Create();
+		m_pList = CListManager<CBullet>::Create();
 		if (m_pList == nullptr)
 		{ // 生成に失敗した場合
 
@@ -84,7 +81,7 @@ HRESULT CBlock::Init()
 //============================================================
 //	終了処理
 //============================================================
-void CBlock::Uninit()
+void CBullet::Uninit()
 {
 	// リストから自身のオブジェクトを削除
 	m_pList->DelList(m_iterator);
@@ -103,9 +100,9 @@ void CBlock::Uninit()
 //============================================================
 //	更新処理
 //============================================================
-void CBlock::Update(const float fDeltaTime)
+void CBullet::Update(const float fDeltaTime)
 {
-	if (useful::ScreenOut(GetVec3Position(),RADIUS.x)) 
+	if (useful::ScreenOut(GetVec3Position(), RADIUS.x))
 	{ // 画面外に出た場合
 
 		// 終了処理
@@ -123,7 +120,7 @@ void CBlock::Update(const float fDeltaTime)
 //============================================================
 //	描画処理
 //============================================================
-void CBlock::Draw(CShader* pShader)
+void CBullet::Draw(CShader* pShader)
 {
 	// オブジェクト3Dの描画
 	CObject3D::Draw(pShader);
@@ -132,33 +129,14 @@ void CBlock::Draw(CShader* pShader)
 //============================================================
 //	生成処理
 //============================================================
-CBlock* CBlock::Create
+CBullet* CBullet::Create
 (
 	const VECTOR3& rPos,	// 位置
-	const EType type,		// 種類
-	const float fSpeed,		// 速度
 	const bool bRight		// 右側
 )
 {
-	// ブロックの生成
-	CBlock* pBlock = nullptr;
-
-	switch (type)
-	{
-	case CBlock::TYPE_BREAK:
-
-		// 破壊可能ブロック
-		pBlock = new CBlockBreak;
-
-		break;
-
-	default:
-
-		// 停止
-		assert(false);
-
-		break;
-	}
+	// 銃弾の生成
+	CBullet* pBlock = new CBullet;
 
 	if (pBlock == nullptr)
 	{ // 生成に失敗した場合
@@ -186,12 +164,6 @@ CBlock* CBlock::Create
 		// サイズを設定
 		pBlock->SetVec3Size(RADIUS);
 
-		// 種類を設定
-		pBlock->m_type = type;
-
-		// 速度を設定
-		pBlock->m_fSpeed = fSpeed;
-
 		// 右側情報を設定
 		pBlock->m_bRight = bRight;
 
@@ -203,7 +175,7 @@ CBlock* CBlock::Create
 //============================================================
 //	リスト取得処理
 //============================================================
-CListManager<CBlock>* CBlock::GetList()
+CListManager<CBullet>* CBullet::GetList()
 {
 	// オブジェクトリストを返す
 	return m_pList;
@@ -212,7 +184,7 @@ CListManager<CBlock>* CBlock::GetList()
 //============================================================
 // 移動処理
 //============================================================
-void CBlock::Move(void)
+void CBullet::Move(void)
 {
 	// 位置取得
 	VECTOR3 pos = GetVec3Position();
@@ -220,11 +192,11 @@ void CBlock::Move(void)
 	// 位置を進める
 	if (m_bRight)
 	{ // 右側移動の場合
-		pos.x += m_fSpeed;
+		pos.x += SPEED;
 	}
 	else
 	{ // 左側移動の場合
-		pos.x -= m_fSpeed;
+		pos.x -= SPEED;
 	}
 
 	// 位置設定

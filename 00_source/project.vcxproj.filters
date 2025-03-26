@@ -402,6 +402,9 @@
     <ClCompile Include="resource\blockBreak.cpp">
       <Filter>ingame</Filter>
     </ClCompile>
+    <ClCompile Include="resource\bullet.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -729,6 +732,9 @@
       <Filter>ingame</Filter>
     </ClInclude>
     <ClInclude Include="resource\blockBreak.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\bullet.h">
       <Filter>ingame</Filter>
     </ClInclude>
   </ItemGroup>
