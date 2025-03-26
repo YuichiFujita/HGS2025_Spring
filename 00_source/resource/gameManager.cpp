@@ -13,6 +13,8 @@
 #include "retention.h"
 #include "rankingManager.h"
 
+#include "block.h"
+
 #ifdef SCORE
 #include "multiValue.h"
 #else TIMER
@@ -135,6 +137,14 @@ HRESULT CGameManager::Init()
 
 	// プレイヤーの生成
 	if (CPlayer::Create(VEC3_ZERO, VEC3_ZERO) == nullptr)
+	{ // 生成に失敗した場合
+
+		assert(false);
+		return E_FAIL;
+	}
+
+	// ブロックの生成
+	if (CBlock::Create(VEC3_ZERO, CBlock::TYPE_BREAK, true) == nullptr)
 	{ // 生成に失敗した場合
 
 		assert(false);

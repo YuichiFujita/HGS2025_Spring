@@ -16,7 +16,7 @@
 //************************************************************
 namespace
 {
-
+	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(50.0f, 25.0f, 0.0f);
 }
 
 //************************************************************
@@ -30,7 +30,7 @@ CListManager<CBlock>* CBlock::m_pList = nullptr;	// オブジェクトリスト
 //============================================================
 //	コンストラクタ
 //============================================================
-CBlock::CBlock() : CObjectMeshCube(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
+CBlock::CBlock() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
 m_type(CBlock::TYPE_BREAK),		// 種類
 m_bRight(true)					// 右側状況
 {
@@ -51,7 +51,7 @@ CBlock::~CBlock()
 HRESULT CBlock::Init()
 {
 	// オブジェクトメッシュキューブの初期化
-	if (FAILED(CObjectMeshCube::Init()))
+	if (FAILED(CObject3D::Init()))
 	{ // 初期化に失敗した場合
 
 		// 失敗を返す
@@ -96,7 +96,7 @@ void CBlock::Uninit()
 	}
 
 	// オブジェクトメッシュキューブの終了
-	CObjectMeshCube::Uninit();
+	CObject3D::Uninit();
 }
 
 //============================================================
@@ -104,7 +104,8 @@ void CBlock::Uninit()
 //============================================================
 void CBlock::Update(const float fDeltaTime)
 {
-
+	// 頂点座標の設定処理
+	SetVtx();
 }
 
 //============================================================
@@ -113,7 +114,7 @@ void CBlock::Update(const float fDeltaTime)
 void CBlock::Draw(CShader* pShader)
 {
 	// オブジェクトメッシュキューブの描画
-	CObjectMeshCube::Draw(pShader);
+	CObject3D::Draw(pShader);
 }
 
 //============================================================
@@ -165,6 +166,15 @@ CBlock* CBlock::Create
 
 		// 位置を設定
 		pBlock->SetVec3Position(rPos);
+
+		// 向きを設定
+		pBlock->SetVec3Rotation(VEC3_ZERO);
+
+		// サイズを設定
+		pBlock->SetVec3Size(RADIUS);
+
+		// 種類を設定
+		pBlock->m_type = type;
 
 		// 右側情報を設定
 		pBlock->m_bRight = bRight;
