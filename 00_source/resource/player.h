@@ -61,6 +61,7 @@ public:
 	inline VECTOR3 GetMove() const				{ return m_move; }		// 移動量取得
 	inline void SetEnableJump(const bool bJump)	{ m_bJump = bJump; }	// ジャンプ状況設定
 	inline bool IsJump() const					{ return m_bJump; }		// ジャンプ状況設定
+	inline float GetCurMulti() const			{ return m_fMaxMulti; }	// 現在のスコア倍率取得
 
 private:
 	// エイリアス定義
@@ -98,7 +99,6 @@ private:
 	float	m_fJumpTimer;	// ジャンプ操作時間
 	float	m_fShotTimer;	// 攻撃インターバル
 	float	m_fMaxMulti;	// ジャンプ中の最高倍率
-	// TODO：着地時スコア加算
 };
 
 #endif	// _PLAYER_H_
