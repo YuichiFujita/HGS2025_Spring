@@ -48,6 +48,7 @@ namespace
 	const float	JUMP_PRESS_TIME	= 0.3f;	// ジャンプ加算時間
 	const float	MAX_ADD_JUMP	= 0.9f;	// ジャンプ加算最大値
 	const float	SHOT_INTERVAL	= 0.4f;	// 攻撃インターバル
+	const float	BULLET_OFFSET_X = 8.0f;	// 弾発生座標のXオフセット
 
 	namespace camera
 	{
@@ -392,7 +393,7 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	pStage->LimitPosition(posPlayer, RADIUS);
 
 	// 攻撃の更新
-	UpdateShot(&posPlayer, fDeltaTime);
+	UpdateShot(posPlayer, fDeltaTime);
 
 	// 方向を反映
 	UpdateDirection();
@@ -572,7 +573,7 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 //============================================================
 //	攻撃の更新処理
 //============================================================
-void CPlayer::UpdateShot(VECTOR3* pPos, const float fDeltaTime)
+void CPlayer::UpdateShot(const VECTOR3& rPos, const float fDeltaTime)
 {
 	// ジャンプしていない場合抜ける
 	if (!m_bJump) { return; }
@@ -588,8 +589,13 @@ void CPlayer::UpdateShot(VECTOR3* pPos, const float fDeltaTime)
 		if (m_fShotTimer <= 0.0f)
 		{ // 攻撃可能な場合
 
+			// 弾生成位置を計算
+			VECTOR3 posShot = rPos;		// プレイヤー位置原点
+			posShot.y += HEIGHT * 0.5f;	// プレイヤー中心Y座標にする
+			posShot.x += (m_bRight) ? BULLET_OFFSET_X : -BULLET_OFFSET_X;	// 発生座標Xにオフセットを与える
+
 			// 弾の生成
-			CBullet::Create(*pPos, m_bRight);
+			CBullet::Create(posShot, m_bRight);
 
 			// インターバルを設定
 			m_fShotTimer = SHOT_INTERVAL;
