@@ -35,7 +35,7 @@ namespace
 	namespace score
 	{
 		const CValue::EType TYPE = CValue::TYPE_NORMAL;	// 数字種類
-		const int DIGIT		= 8;			// スコア桁数
+		const int DIGIT		= 3;			// スコア桁数
 		const VECTOR3 POS	= SCREEN_CENT;	// スコア位置
 		const VECTOR3 SIZE	= VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f;	// スコア数字大きさ
 		const VECTOR3 SPACE	= VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白

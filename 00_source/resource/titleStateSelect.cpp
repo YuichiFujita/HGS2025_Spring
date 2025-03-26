@@ -22,7 +22,7 @@ namespace
 
 	namespace title
 	{
-		const char*		TEXTURE	= "data\\TEXTURE\\title000.png";		// テクスチャパス
+		const char*		TEXTURE	= "data\\TEXTURE\\TitleLogo.png";		// テクスチャパス
 		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x, 235.0f, 0.0f);	// 位置
 		const float		WIDTH	= 720.0f;	// 横幅
 	}
