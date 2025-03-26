@@ -18,6 +18,7 @@
 #include "stage.h"
 #include "sceneGame.h"
 #include "gameManager.h"
+#include "bullet.h"
 
 //************************************************************
 //	マクロ定義
@@ -46,6 +47,7 @@ namespace
 	const float	LAND_REV	= 0.18f;	// 通常状態時の地上の移動量の減衰係数
 	const float	JUMP_PRESS_TIME	= 0.3f;	// ジャンプ加算時間
 	const float	MAX_ADD_JUMP	= 0.9f;	// ジャンプ加算最大値
+	const float	SHOT_INTERVAL	= 0.4f;	// 攻撃インターバル
 
 	namespace camera
 	{
@@ -77,7 +79,8 @@ CPlayer::CPlayer() : CObject3D(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY)
 	m_bRight	 (false),		// 左右フラグ
 	m_bJump		 (false),		// ジャンプ状況
 	m_bJumpPress (false),		// ジャンプ操作フラグ
-	m_fJumpTimer (0.0f)			// ジャンプ操作時間
+	m_fJumpTimer (0.0f),		// ジャンプ操作時間
+	m_fShotTimer (0.0f)			// 攻撃インターバル
 {
 	// スタティックアサート
 	static_assert(NUM_ARRAY(m_aFuncState) == CPlayer::STATE_MAX, "ERROR : State Count Mismatch");
@@ -104,6 +107,7 @@ HRESULT CPlayer::Init()
 	m_bJump		 = true;			// ジャンプ状況
 	m_bJumpPress = false;			// ジャンプ操作フラグ
 	m_fJumpTimer = 0.0f;			// ジャンプ操作時間
+	m_fShotTimer = 0.0f;			// 攻撃インターバル
 
 	// オブジェクトキャラクターの初期化
 	if (FAILED(CObject3D::Init()))
@@ -341,7 +345,7 @@ void CPlayer::UpdateNone(const float fDeltaTime)
 	CStage* pStage = GET_MANAGER->GetStage();	// ステージ情報
 	pStage->LimitPosition(posPlayer, RADIUS);
 
-	// 方向更新
+	// 方向を反映
 	UpdateDirection();
 
 	// 位置を反映
@@ -387,7 +391,10 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	CStage* pStage = GET_MANAGER->GetStage();	// ステージ情報
 	pStage->LimitPosition(posPlayer, RADIUS);
 
-	// 方向更新
+	// 攻撃の更新
+	UpdateShot(&posPlayer, fDeltaTime);
+
+	// 方向を反映
 	UpdateDirection();
 
 	// 位置を反映
@@ -418,7 +425,7 @@ void CPlayer::UpdateDeath(const float fDeltaTime)
 	CStage* pStage = GET_MANAGER->GetStage();	// ステージ情報
 	pStage->LimitPosition(posPlayer, RADIUS);
 
-	// 方向更新
+	// 方向を反映
 	UpdateDirection();
 
 	// 位置を反映
@@ -563,6 +570,34 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 }
 
 //============================================================
+//	攻撃の更新処理
+//============================================================
+void CPlayer::UpdateShot(VECTOR3* pPos, const float fDeltaTime)
+{
+	// ジャンプしていない場合抜ける
+	if (!m_bJump) { return; }
+
+	// インターバルから経過時間分減算
+	m_fShotTimer -= fDeltaTime;
+	useful::LimitMinNum(m_fShotTimer, 0.0f);
+
+	CInputKeyboard* pKey = GET_INPUTKEY;	// キーボード情報
+	CInputPad* pPad = GET_INPUTPAD;			// パッド情報
+	if (pKey->IsPress(DIK_RETURN) || pPad->IsPress(CInputPad::KEY_B))
+	{
+		if (m_fShotTimer <= 0.0f)
+		{ // 攻撃可能な場合
+
+			// 弾の生成
+			CBullet::Create(*pPos, m_bRight);
+
+			// インターバルを設定
+			m_fShotTimer = SHOT_INTERVAL;
+		}
+	}
+}
+
+//============================================================
 //	着地状況の更新処理
 //============================================================
 bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
@@ -583,6 +618,9 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 
 		// ジャンプ操作時間を初期化
 		m_fJumpTimer = 0.0f;
+
+		// 攻撃インターバルを初期化
+		m_fShotTimer = 0.0f;
 	}
 
 	// 着地フラグを返す
