@@ -44,8 +44,8 @@ namespace
 	const float	JUMP		= 4.7f;		// ƒWƒƒƒ“ƒv—Í
 	const float	GRAVITY		= 0.39f;	// d—Í
 	const float	RADIUS		= 20.0f;	// ”¼Œa
-	const float WIDTH		= 50.0f;	// ‰¡•
-	const float HEIGHT		= 50.0f;	// c•
+	const float WIDTH		= 70.0f;	// ‰¡•
+	const float HEIGHT		= 70.0f;	// c•
 	const float	REV_ROTA	= 0.25f;	// Œü‚«•ÏX‚Ì•â³ŒW”
 	const float	JUMP_REV	= 0.955f;	// ’Êíó‘Ô‚Ì‹ó’†‚ÌˆÚ“®—Ê‚ÌŒ¸ŠŒW”
 	const float	LAND_REV	= 0.18f;	// ’Êíó‘Ô‚Ì’nã‚ÌˆÚ“®—Ê‚ÌŒ¸ŠŒW”

@@ -20,12 +20,6 @@ namespace
 		"data\\TEXTURE\\ComboArea001.png",
 		"data\\TEXTURE\\ComboArea002.png",
 	};
-	const D3DXCOLOR COL[] =	// テクスチャ
-	{
-		D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f),
-		D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f),
-		D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f),
-	};
 	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(1440.0f, 240.0f, 0.0f);		// 半径
 	const float MULTI_RATE = 0.5f;		// コンボ倍率
 	const float MIN_MULTI = 1.0f;		// コンボの最低値
@@ -183,8 +177,6 @@ CComboArea* CComboArea::Create
 
 		// テクスチャの割り当て処理
 		pBlock->BindTexture(TEXTURE[nMul].c_str());
-
-		pBlock->SetColor(COL[nMul]);
 
 		// 確保したアドレスを返す
 		return pBlock;

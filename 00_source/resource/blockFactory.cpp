@@ -18,14 +18,17 @@
 //************************************************************
 namespace
 {
-	const int PRIORITY = 0;			// 優先順位
-	const float ADD_RATE = 0.0001f;	// 割合の加算数
-	const float MAX_RATE = 1.0f;	// 割合の最大値
-	const float MIN_RATE = 0.1f;	// 割合の最小値
-	const float CREATE_RATE = 1.0f;	// 生成の割合
+	const int PRIORITY = 0;				// 優先順位
+	const float ADD_RATE = 0.0003f;		// 割合の加算数
+	const float MAX_RATE = 1.0f;		// 割合の最大値
+	const float MIN_RATE = 0.1f;		// 割合の最小値
+	const float CREATE_RATE = 15.0f;	// 生成の割合
 
-	const float RIGHT_POS = -740.0f;	// 右側の位置
-	const float LEFT_POS = 740.0f;		// 左側の位置
+	const float SPEED_MIN = 2.0f;		// 速度の最小値
+	const float SPEED_MAX = 7.0f;		// 速度の最大値
+	const float BLOCK_POS = -713.0f;	// 右側の位置
+	const float POSY_MIN = 150.0f;		// Y軸位置の最小値
+	const float POSY_MAX = 680.0f;		// Y軸位置の最大値
 }
 
 //************************************************************
@@ -85,27 +88,22 @@ void CBlockFactory::Update(const float fDeltaTime)
 	}
 
 	// 割合を加算する
-	m_fCreateRate += sinf(m_fRate);
+	m_fCreateRate += m_fRate;
 	int nNum = (int)(m_fCreateRate / CREATE_RATE);
 
 	for (int nCnt = 0; nCnt < nNum; nCnt++)
 	{
 		// 設定情報
-		VECTOR3 pos = VEC3_ZERO;						// 位置
-		float fSpeed = useful::Random(2.0f, 8.0f, 1);	// 速度
-		bool bRight = (bool)(rand() % 2);				// 右側状況
+		VECTOR3 pos = VEC3_ZERO;								// 位置
+		float fSpeed = useful::Random(SPEED_MIN, SPEED_MAX, 1);	// 速度
 
 		// 位置を設定する
-		if (bRight) { pos.x = RIGHT_POS; }
-		else { pos.x = LEFT_POS; }
-		pos.y = useful::Random(100.0f, 720.0f, 1);
+		pos.x = BLOCK_POS;
+		pos.y = useful::Random(POSY_MIN, POSY_MAX, 1);
 		pos.z = 0.0f;
 
-		// 左に進む場合、移動量を逆転させる
-		if (!bRight) { fSpeed *= -1; }
-
 		// ブロックを生成する
-		CBlock::Create(pos, CBlock::TYPE_BREAK, fSpeed, bRight);
+		CBlock::Create(pos, CBlock::TYPE_BREAK, fSpeed, true);
 
 		// 生成割合をリセットする
 		m_fCreateRate = 0.0f;
