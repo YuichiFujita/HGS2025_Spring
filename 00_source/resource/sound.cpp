@@ -43,6 +43,7 @@ namespace
 		SSoundInfo("data\\BGM\\bgm001.wav", -1),		// ゲーム
 		SSoundInfo("data\\BGM\\bgm002.wav", -1),		// リザルト
 		SSoundInfo("data\\SE\\jump000.wav", 0),			// ジャンプ
+		SSoundInfo("data\\SE\\fover000.wav", 0),		// ホバー
 		SSoundInfo("data\\SE\\shot000.wav", 0),			// 射撃
 		SSoundInfo("data\\SE\\explosion000.wav", 0),	// 爆発
 		SSoundInfo("data\\SE\\death000.wav", 0),		// 死亡

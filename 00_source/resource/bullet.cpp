@@ -11,6 +11,7 @@
 #include "block.h"
 #include "sceneGame.h"
 #include "gameManager.h"
+#include "effect3D.h"
 
 //************************************************************
 //	定数宣言
@@ -115,6 +116,20 @@ void CBullet::Update(const float fDeltaTime)
 
 	// 移動処理
 	Move();
+
+	COLOR col;
+	col.Code("ee7800");
+
+	VECTOR3 move1, move2;
+	move1 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+	move2 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+
+	CEffect3D::Create(GetVec3Position(), 26.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+	CEffect3D::Create(GetVec3Position(), 26.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+	CEffect3D::Create(GetVec3Position(), 20.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+	CEffect3D::Create(GetVec3Position(), 20.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+	CEffect3D::Create(GetVec3Position(), 20.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
+	CEffect3D::Create(GetVec3Position(), 20.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
 
 	// オブジェクト3Dの更新
 	CObject3D::Update(fDeltaTime);
