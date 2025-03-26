@@ -38,20 +38,20 @@ namespace
 {
 	const char*	TEXTURE_RIGHT	= "data\\TEXTURE\\player_right000.png";	// プレイヤー右方向のテクスチャパス
 	const char*	TEXTURE_LEFT	= "data\\TEXTURE\\player_left000.png";	// プレイヤー左方向のテクスチャパス
-	const int	PRIORITY	= 3;		// プレイヤーの優先順位
-	const float	MOVE		= 0.9f;		// 移動量
-	const float	JUMP		= 6.0f;		// ジャンプ力
-	const float	GRAVITY		= 0.4f;		// 重力
-	const float	RADIUS		= 20.0f;	// 半径
-	const float WIDTH		= 50.0f;	// 横幅
-	const float HEIGHT		= 50.0f;	// 縦幅
-	const float	REV_ROTA	= 0.25f;	// 向き変更の補正係数
-	const float	JUMP_REV	= 0.18f;	// 通常状態時の空中の移動量の減衰係数
-	const float	LAND_REV	= 0.18f;	// 通常状態時の地上の移動量の減衰係数
-	const float	JUMP_PRESS_TIME	= 0.3f;	// ジャンプ加算時間
-	const float	MAX_ADD_JUMP	= 0.9f;	// ジャンプ加算最大値
-	const float	SHOT_INTERVAL	= 0.4f;	// 攻撃インターバル
-	const float	BULLET_OFFSET_X = 8.0f;	// 弾発生座標のXオフセット
+	const int	PRIORITY	= 3;			// プレイヤーの優先順位
+	const float	MOVE		= 0.9f;			// 移動量
+	const float	JUMP		= 6.4f;			// ジャンプ力
+	const float	GRAVITY		= 0.34f;		// 重力
+	const float	RADIUS		= 20.0f;		// 半径
+	const float WIDTH		= 50.0f;		// 横幅
+	const float HEIGHT		= 50.0f;		// 縦幅
+	const float	REV_ROTA	= 0.25f;		// 向き変更の補正係数
+	const float	JUMP_REV	= 0.18f;		// 通常状態時の空中の移動量の減衰係数
+	const float	LAND_REV	= 0.18f;		// 通常状態時の地上の移動量の減衰係数
+	const float	JUMP_PRESS_TIME	= 0.37f;	// ジャンプ加算時間
+	const float	MAX_ADD_JUMP	= 1.3f;		// ジャンプ加算最大値
+	const float	SHOT_INTERVAL	= 0.4f;		// 攻撃インターバル
+	const float	BULLET_OFFSET_X = 8.0f;		// 弾発生座標のXオフセット
 
 	namespace camera
 	{
