@@ -23,7 +23,6 @@ namespace
 	namespace combo
 	{
 		const int DIGIT = 1;			// 桁数
-		const int CONVERT_MULTI = 10;	// 整数変換時の倍率
 		const VECTOR3 POS = VECTOR3(1255.0f, 30.0f, 0.0f);			// 位置
 		const VECTOR3 SIZE = VECTOR3(52.8f, 62.4f, 0.0f) * 1.0f;	// サイズ
 		const VECTOR3 SPACE = VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
@@ -208,7 +207,7 @@ void CComboUI::ResetCombo()
 //============================================================
 void CComboUI::SetMultiValue(const float fMulti)
 {
-	m_pMulti->SetNum((int)(fMulti * combo::CONVERT_MULTI));
+	m_pMulti->SetNum((int)(fMulti));
 }
 
 //============================================================
