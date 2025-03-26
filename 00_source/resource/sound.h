@@ -32,6 +32,7 @@ public:
 		LABEL_BGM_GAME,			// ゲーム
 		LABEL_BGM_RESULT,		// リザルト
 		LABEL_SE_JUMP,			// ジャンプ
+		LABEL_SE_HOVER,			// ホバー
 		LABEL_SE_SHOT,			// 射撃
 		LABEL_SE_EXPLOSION,		// 爆発
 		LABEL_SE_DEATH,			// 死亡

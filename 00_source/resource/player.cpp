@@ -23,6 +23,7 @@
 #include "comboArea.h"
 #include "collision.h"
 #include "explosion.h"
+#include "effect3D.h"
 
 //************************************************************
 //	マクロ定義
@@ -478,7 +479,7 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	UpdateGravity(fDeltaTime);
 
 	// ジャンプの更新
-	UpdateJump(fDeltaTime);
+	UpdateJump(posPlayer, fDeltaTime);
 
 	// 位置更新
 	UpdatePosition(&posPlayer, fDeltaTime);
@@ -622,7 +623,7 @@ void CPlayer::UpdateGravity(const float fDeltaTime)
 //============================================================
 //	ジャンプの更新処理
 //============================================================
-void CPlayer::UpdateJump(const float fDeltaTime)
+void CPlayer::UpdateJump(const VECTOR3& rPos, const float fDeltaTime)
 {
 	CInputKeyboard* pKey = GET_INPUTKEY;	// キーボード情報
 	CInputPad* pPad = GET_INPUTPAD;			// パッド情報
@@ -648,6 +649,23 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 			m_move.x = 0.0f;
 			m_move.z = 0.0f;
 #endif
+
+			COLOR col;
+			col.Code("a0d8ef");
+
+			for (int i = 0; i < 8; i++)
+			{
+				VECTOR3 move1, move2;
+				move1 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+				move2 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, 0.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
+			}
 
 			// ジャンプ音再生
 			PLAY_SOUND(CSound::LABEL_SE_JUMP);
@@ -677,6 +695,21 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 
 				// 移動量を補正
 				m_move.y = -2.45f;
+
+				// TODO
+				COLOR col;
+				col.Code("a0d8ef");
+
+				VECTOR3 move1, move2;
+				move1 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+				move2 = VECTOR3(useful::Random(-2.0f, 2.0f), useful::Random(1.0f, 2.0f), 0.0f);
+
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), color::Black(), -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_ADD);
+				CEffect3D::Create(rPos + VECTOR3(+28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move1, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
+				CEffect3D::Create(rPos + VECTOR3(-28.0f, -10.0f, 0.0f), 30.0f, CEffect3D::TYPE_SMOKE, 24, move2, VECTOR3(0.0f, 0.0f, useful::RandomRot()), col, -0.4f, CRenderState::BLEND_NORMAL);
 			}
 		}
 	}
