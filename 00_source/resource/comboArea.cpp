@@ -41,7 +41,7 @@ CListManager<CComboArea>* CComboArea::m_pList = nullptr;	// オブジェクトリスト
 //============================================================
 //	コンストラクタ
 //============================================================
-CComboArea::CComboArea() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 0),
+CComboArea::CComboArea() : CObject3D(CObject::LABEL_COMBOAREA, CObject::DIM_3D, 0),
 m_nIdx(0)		// 番号
 {
 

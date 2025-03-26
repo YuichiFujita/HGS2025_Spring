@@ -82,6 +82,7 @@ public:
 		LABEL_PARTICLE,		// パーティクル
 		LABEL_PLAYER,		// プレイヤー
 		LABEL_BLOCK,		// ブロック
+		LABEL_COMBOAREA,	// コンボエリア
 		LABEL_FIELD,		// 地面
 		LABEL_WALL,			// 壁
 		LABEL_SCENERY,		// 景色
