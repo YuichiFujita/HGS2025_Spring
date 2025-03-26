@@ -71,6 +71,7 @@ private:
 
 	// メンバ関数
 	bool CollisionBlock(const VECTOR3& rPos);		// ブロックとの当たり判定
+	void CollisionMulti(const VECTOR3& rPos);		// 倍率エリアとの当たり判定
 	void UpdateNone(const float fDeltaTime);		// 何もしない状態時の更新
 	void UpdateNormal(const float fDeltaTime);		// 通常状態時の更新
 	void UpdateDeath(const float fDeltaTime);		// 死亡状態時の更新
@@ -96,6 +97,8 @@ private:
 	bool	m_bJumpPress;	// ジャンプ操作フラグ
 	float	m_fJumpTimer;	// ジャンプ操作時間
 	float	m_fShotTimer;	// 攻撃インターバル
+	float	m_fMaxMulti;	// ジャンプ中の最高倍率
+	// TODO：着地時スコア加算
 };
 
 #endif	// _PLAYER_H_

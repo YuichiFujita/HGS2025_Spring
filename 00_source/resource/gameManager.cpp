@@ -33,7 +33,7 @@ namespace
 	namespace score
 	{
 		const CValue::EType TYPE = CValue::TYPE_NORMAL;	// 数字種類
-		const float DIGIT	= 8;			// スコア桁数
+		const int DIGIT		= 8;			// スコア桁数
 		const VECTOR3 POS	= SCREEN_CENT;	// スコア位置
 		const VECTOR3 SIZE	= VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f;	// スコア数字大きさ
 		const VECTOR3 SPACE	= VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
@@ -77,7 +77,8 @@ CGameManager::CGameManager() :
 	m_pTimer	 (nullptr),	// タイマー情報
 #endif
 	m_pState	 (nullptr),	// 状態
-	m_bControlOK (false)	// 操作可能フラグ
+	m_bControlOK (false),	// 操作可能フラグ
+	m_nBaseScore (0)		// 基礎スコア
 {
 
 }
@@ -103,6 +104,7 @@ HRESULT CGameManager::Init()
 #endif
 	m_pState	 = nullptr;	// 状態
 	m_bControlOK = true;	// 操作可能フラグ
+	m_nBaseScore = 0;		// 基礎スコア
 
 	// 通常状態にする
 	ChangeState(new CGameStateNormal);
@@ -191,10 +193,6 @@ void CGameManager::Update(const float fDeltaTime)
 	m_pState->Update(fDeltaTime);
 
 #ifdef SCORE
-#ifdef _DEBUG
-	// TODO：スコア加算
-	m_pScore->AddNum((int)(100.0f * fDeltaTime));
-#endif
 	// スコアの更新
 	//m_pScore->Update(fDeltaTime);
 #else TIMER
@@ -207,7 +205,7 @@ void CGameManager::Update(const float fDeltaTime)
 	// ブロックの生成
 	if (GET_INPUTKEY->IsTrigger(DIK_9))
 	{
-		if (CBlock::Create(D3DXVECTOR3(0.0f, 200.0f, 0.0f), CBlock::TYPE_BREAK, 6.0f, false) == nullptr)
+		if (CBlock::Create(D3DXVECTOR3(0.0f, 50.0f, 0.0f), CBlock::TYPE_BREAK, 6.0f, false) == nullptr)
 		{ // 生成に失敗した場合
 
 			assert(false);
@@ -251,6 +249,15 @@ HRESULT CGameManager::ChangeState(CGameState* pState)
 	}
 
 	return S_OK;
+}
+
+//============================================================
+//	スコア加算処理
+//============================================================
+void CGameManager::AddScore(const int nAdd)
+{
+	// スコアを加算する
+	m_pScore->AddNum(nAdd);
 }
 
 //============================================================
