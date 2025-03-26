@@ -19,7 +19,7 @@ namespace
 {
 	const char*		TEXTURE = "data\\TEXTURE\\start000.png";	// テクスチャパス
 	const VECTOR3	POS = SCREEN_CENT;	// 位置
-	const float		WIDTH = 620.0f;		// 横幅
+	const float		WIDTH = 1020.0f;	// 横幅
 	const float		SCALE_TIME = 0.8f;	// 演出時間
 	const float		ALPHA_TIME = 2.5f;	// 演出時間
 }

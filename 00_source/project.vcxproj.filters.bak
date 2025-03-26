@@ -1,0 +1,782 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{dc1be0e9-f436-48fa-a679-ebef65fc4b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{0c44558e-c4d3-4640-8fea-113f7376acf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="flyweight">
+      <UniqueIdentifier>{92d4b482-ad73-4617-8b03-97c8267782bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{321b6052-d42f-4518-bf11-d19a355d5313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\title">
+      <UniqueIdentifier>{f6953c22-b9ec-47f6-8230-967afdd4e323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\game">
+      <UniqueIdentifier>{7014a010-61a7-43fe-8ac9-3a929ebe0be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{5874bc1c-3cb1-4064-9beb-9d80c63bb63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{82b6c02a-3d5e-497b-a701-6cd43414ba4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{d00c105d-1b9b-49cf-97bb-3be0ab328ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{f6608d6c-8b6c-412d-a240-d8aff196d570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state">
+      <UniqueIdentifier>{28170c41-ab9a-462a-b7af-18ac38e5ecae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{fe84aab8-8421-49dd-b4d2-9db8f62f3ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ingame">
+      <UniqueIdentifier>{b06a5a0f-755e-465b-ada1-cd07cde8f5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="outgame">
+      <UniqueIdentifier>{7598e507-1ebe-4bfc-96a0-8df4716ce436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\debug">
+      <UniqueIdentifier>{e70c967f-fb02-4e73-b16b-451de6fecbda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\input">
+      <UniqueIdentifier>{90360f11-c2ca-4f21-b43d-34e307978fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\renderer">
+      <UniqueIdentifier>{06fb53c4-136a-4338-ad57-82aaab582a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\light">
+      <UniqueIdentifier>{1faf34bd-5ba1-4887-a513-30d558c73838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state\game">
+      <UniqueIdentifier>{b4210378-91b6-47fe-9d22-843a2ff1d962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state\title">
+      <UniqueIdentifier>{70b8fcbd-b32f-41af-bf19-557e9afd870b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\result">
+      <UniqueIdentifier>{aee4618f-ad9d-4ae5-8356-79644a80dd32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\ranking">
+      <UniqueIdentifier>{b32fa81a-cce0-4c6a-a17e-dfb30dd37e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state\result">
+      <UniqueIdentifier>{efd8f35e-1442-44b5-9a9e-d009d5035f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state\ranking">
+      <UniqueIdentifier>{3f62ecf1-dfcf-46c2-81b4-38f65e09d338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{7802df47-284e-428b-bacd-10c28e8da035}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="resource\camera.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\fade.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\deltaTime.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\main.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\manager.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\loading.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\precompile.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sound.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\character.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\font.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\fontChar.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\model.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\texture.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\shader.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\shaderMono.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\shaderToon.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\object.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\object2D.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\object3D.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectBillboard.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectChara.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshCircle.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshCube.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshCylinder.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshDome.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshField.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshRing.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshSphere.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshTube.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectMeshWall.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectModel.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectTornado.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\anim2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\char2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\effect2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gauge2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\particle2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scrollString2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scrollText2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scroll2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\string2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\text2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\value.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\multiValue.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\multiModel.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scrollMeshField.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scrollMeshRing.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\collision.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\listManager.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\motion.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\random.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\timer.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\useful.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sceneTitle.cpp">
+      <Filter>scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\titleManager.cpp">
+      <Filter>scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sceneGame.cpp">
+      <Filter>scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameManager.cpp">
+      <Filter>scene\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\loadtext.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\shakeString2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\retention.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\timerUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\timeUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\valueUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\hitStop.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\pause.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\anim3D.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\effect3D.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\particle3D.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\characterAnim3D.cpp">
+      <Filter>flyweight</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\objectCharaAnim3D.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\extension.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\titleState.cpp">
+      <Filter>state\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\titleStateLogo.cpp">
+      <Filter>state\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\debug.cpp">
+      <Filter>system\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\debugproc.cpp">
+      <Filter>system\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\input.cpp">
+      <Filter>system\input</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\inputManager.cpp">
+      <Filter>system\input</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\renderer.cpp">
+      <Filter>system\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\renderState.cpp">
+      <Filter>system\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\renderTexture.cpp">
+      <Filter>system\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\screen.cpp">
+      <Filter>system\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\light.cpp">
+      <Filter>system\light</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\lightDir.cpp">
+      <Filter>system\light</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\lightManager.cpp">
+      <Filter>system\light</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\titleStateSelect.cpp">
+      <Filter>state\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\titleStateTutorial.cpp">
+      <Filter>state\title</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameState.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameStateNormal.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sceneResult.cpp">
+      <Filter>scene\result</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\resultManager.cpp">
+      <Filter>scene\result</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\resultState.cpp">
+      <Filter>state\result</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\resultStateNormal.cpp">
+      <Filter>state\result</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\rankingManager.cpp">
+      <Filter>scene\ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sceneRanking.cpp">
+      <Filter>scene\ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\rankingState.cpp">
+      <Filter>state\ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\rankingStateNormal.cpp">
+      <Filter>state\ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\field.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\liquid.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\orbit.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\scenery.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\sky.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\wall.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\wave.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\stage.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\player.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\block.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\blockBreak.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\bullet.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\comboArea.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\comboUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\blockFactory.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\explosion.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameStateEnd.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameStateStart.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\start.cpp">
+      <Filter>outgame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\comboAreaManager.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource\anim2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\char2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\effect2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gauge2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\particle2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scrollString2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scrollText2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scroll2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\string2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\text2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\value.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\object.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\object2D.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\object3D.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectBillboard.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectChara.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshCircle.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshCube.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshCylinder.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshDome.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshField.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshRing.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshSphere.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshTube.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectMeshWall.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectModel.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectTornado.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\shaderToon.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\shader.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\shaderMono.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\character.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\font.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\fontChar.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\model.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\texture.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\camera.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\deltaTime.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\fade.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\loading.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\main.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\manager.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sound.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\precompile.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\resource.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\multiValue.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\multiModel.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scrollMeshField.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scrollMeshRing.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\collision.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\listManager.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\motion.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\random.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\timer.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\useful.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sceneTitle.h">
+      <Filter>scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\titleManager.h">
+      <Filter>scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sceneGame.h">
+      <Filter>scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gameManager.h">
+      <Filter>scene\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\loadtext.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\shakeString2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\retention.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\timerUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\timeUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\valueUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\hitStop.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\pause.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\anim3D.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\effect3D.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\particle3D.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\characterAnim3D.h">
+      <Filter>flyweight</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\objectCharaAnim3D.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\extension.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\titleState.h">
+      <Filter>state\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\titleStateLogo.h">
+      <Filter>state\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\debugproc.h">
+      <Filter>system\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\debug.h">
+      <Filter>system\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\inputManager.h">
+      <Filter>system\input</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\input.h">
+      <Filter>system\input</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\renderer.h">
+      <Filter>system\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\renderState.h">
+      <Filter>system\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\renderTexture.h">
+      <Filter>system\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\screen.h">
+      <Filter>system\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\lightManager.h">
+      <Filter>system\light</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\light.h">
+      <Filter>system\light</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\lightDir.h">
+      <Filter>system\light</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\titleStateSelect.h">
+      <Filter>state\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\titleStateTutorial.h">
+      <Filter>state\title</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gameState.h">
+      <Filter>state\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gameStateNormal.h">
+      <Filter>state\game</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sceneResult.h">
+      <Filter>scene\result</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\resultManager.h">
+      <Filter>scene\result</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\resultState.h">
+      <Filter>state\result</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\resultStateNormal.h">
+      <Filter>state\result</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\rankingManager.h">
+      <Filter>scene\ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sceneRanking.h">
+      <Filter>scene\ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\rankingState.h">
+      <Filter>state\ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\rankingStateNormal.h">
+      <Filter>state\ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\field.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\liquid.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\orbit.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\scenery.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\sky.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\wall.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\wave.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\stage.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\player.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\block.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\blockBreak.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\bullet.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\comboArea.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\comboUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\blockFactory.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\comboAreaManager.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource\resource.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
