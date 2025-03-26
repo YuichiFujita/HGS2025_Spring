@@ -396,6 +396,12 @@
     <ClCompile Include="resource\player.cpp">
       <Filter>ingame</Filter>
     </ClCompile>
+    <ClCompile Include="resource\block.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\blockBreak.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -717,6 +723,12 @@
       <Filter>ingame</Filter>
     </ClInclude>
     <ClInclude Include="resource\player.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\block.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\blockBreak.h">
       <Filter>ingame</Filter>
     </ClInclude>
   </ItemGroup>
