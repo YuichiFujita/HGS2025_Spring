@@ -36,7 +36,7 @@ namespace
 	{
 		const char*		TEXTURE = "data\\TEXTURE\\ranking000.png";			// テクスチャパス
 		const POSGRID2	PTRN	= POSGRID2(CRankingManager::MAX_RANK, 1);	// テクスチャ分割数
-		const VECTOR3	POS		= VECTOR3(290.0f, 190.0f, 0.0f);			// 位置
+		const VECTOR3	POS		= VECTOR3(470.0f, 190.0f, 0.0f);			// 位置
 		const VECTOR3	OFFSET	= VECTOR3(0.0f, 112.0f, 0.0f);				// オフセット
 		const float		WIDTH	= 160.0f * 1.3f;	// 横幅
 	}
@@ -48,7 +48,7 @@ namespace
 	namespace score
 	{
 		const CValue::EType TYPE = CValue::TYPE_NORMAL;	// 数字種類
-		const int DIGIT		 = 8;						// スコア桁数
+		const int DIGIT		 = 3;						// スコア桁数
 		const VECTOR3 POS	 = VECTOR3(740.0f, 190.0f, 0.0f);				// スコア位置
 		const VECTOR3 OFFSET = VECTOR3(0.0f, 112.0f, 0.0f);					// スコアオフセット
 		const VECTOR3 SIZE	 = VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f * 1.3f;	// スコア数字大きさ

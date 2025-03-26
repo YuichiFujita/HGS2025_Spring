@@ -25,7 +25,7 @@ namespace
 	{
 		const char*		TEXTURE	= "data\\TEXTURE\\TitleLogo.png";		// テクスチャパス
 		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x, 235.0f, 0.0f);	// 位置
-		const float		WIDTH	= 720.0f;	// 横幅
+		const float		WIDTH	= 790.0f;	// 横幅
 	}
 
 	namespace select
@@ -35,9 +35,9 @@ namespace
 			"data\\TEXTURE\\titleSelect000.png",	// 開始
 			"data\\TEXTURE\\titleSelect001.png",	// チュートリアル
 		};
-		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x - 260.0f, 535.0f, 0.0f);	// 位置
+		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x - 260.0f, 565.0f, 0.0f);	// 位置
 		const VECTOR3	OFFSET	= VECTOR3(260.0f * 2.0f, 0.0f, 0.0f);	// オフセット
-		const float		WIDTH	= 480.0f;				// 横幅
+		const float		WIDTH	= 420.0f;				// 横幅
 		const COLOR		COL_DEFAULT	= color::White();	// 通常色
 		const COLOR		COL_CHOICE	= color::Yellow();	// 選択色
 	}

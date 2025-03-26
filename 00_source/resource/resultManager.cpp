@@ -30,12 +30,12 @@ namespace
 	{
 		const char*		TEXTURE	= "data\\TEXTURE\\timer_title000.png";	// テクスチャパス
 		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x, 120.0f, 0.0f);	// 位置
-		const float		HEIGHT	= 120.0f;	// 縦幅
+		const float		HEIGHT	= 150.0f;	// 縦幅
 	}
 
 	namespace rank
 	{
-		const char*	FONT = "data\\FONT\\JFドット東雲ゴシック14.ttf";	// フォントパス
+		const char*	FONT = "data\\FONT\\DelaSuko Gothic One.ttf";	// フォントパス
 		const int	PRIORITY	= 6;			// テキストの優先順位
 		const bool	ITALIC		= false;		// イタリック
 		const float	HEIGHT		= 82.0f;		// 文字縦幅
@@ -48,8 +48,8 @@ namespace
 	namespace cont
 	{
 		const char*		TEXTURE	= "data\\TEXTURE\\continue000.png";		// テクスチャパス
-		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x, 445.0f, 0.0f);	// 位置
-		const float		WIDTH	= 700.0f;	// 横幅
+		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x, 475.0f, 0.0f);	// 位置
+		const float		WIDTH	= 560.0f;	// 横幅
 	}
 
 	namespace select
@@ -59,7 +59,7 @@ namespace
 			"data\\TEXTURE\\continueSelect000.png",	// YES
 			"data\\TEXTURE\\continueSelect001.png",	// NO
 		};
-		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x - 160.0f, 585.0f, 0.0f);	// 位置
+		const VECTOR3	POS		= VECTOR3(SCREEN_CENT.x - 160.0f, 615.0f, 0.0f);	// 位置
 		const VECTOR3	OFFSET	= VECTOR3(160.0f * 2.0f, 0.0f, 0.0f);	// オフセット
 		const float		WIDTH	= 340.0f;				// 横幅
 		const COLOR		COL_DEFAULT	= color::White();	// 通常色
@@ -70,9 +70,9 @@ namespace
 	namespace score
 	{
 		const CValue::EType TYPE = CValue::TYPE_NORMAL;	// 数字種類
-		const float DIGIT	= 8;						// スコア桁数
-		const VECTOR3 POS	= VECTOR3(SCREEN_CENT.x, 240.0f, 0.0f);	// スコア位置
-		const VECTOR3 SIZE	= VECTOR3(52.8f, 62.4f, 0.0f) * 1.4f;	// スコア数字大きさ
+		const int DIGIT		= 3;						// スコア桁数
+		const VECTOR3 POS	= VECTOR3(SCREEN_CENT.x, 250.0f, 0.0f);	// スコア位置
+		const VECTOR3 SIZE	= VECTOR3(52.8f, 62.4f, 0.0f) * 2.5f;	// スコア数字大きさ
 		const VECTOR3 SPACE	= VECTOR3(SIZE.x * 0.85f, 0.0f, 0.0f);	// スコア数字空白
 	}
 #else TIMER
@@ -233,7 +233,7 @@ HRESULT CResultManager::Init()
 		//m_pUpdateRank->SetScrollSE(CSound::LABEL_SE_TEXT01);
 
 		// 色を黄色にする
-		m_pUpdateRank->SetColor(color::Yellow());
+		m_pUpdateRank->SetColor(color::Cyan());
 	}
 
 	// コンテニューの生成
