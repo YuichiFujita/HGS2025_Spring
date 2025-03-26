@@ -90,6 +90,7 @@ public:
 		LABEL_SKY,			// 空
 		LABEL_LIQUID,		// 液体
 		LABEL_WAVE,			// 波動
+		LABEL_EXPLOSION,	// 爆発
 #ifdef _DEBUG
 		LABEL_DEBUG,		// デバッグ
 #endif // _DEBUG

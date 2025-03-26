@@ -45,5 +45,6 @@ protected:
 //	インクルードファイル
 //************************************************************
 #include "gameStateNormal.h"
+#include "gameStateEnd.h"
 
 #endif	// _GAME_STATE_H_

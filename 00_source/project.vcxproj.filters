@@ -414,6 +414,12 @@
     <ClCompile Include="resource\blockFactory.cpp">
       <Filter>ingame</Filter>
     </ClCompile>
+    <ClCompile Include="resource\explosion.cpp">
+      <Filter>ingame</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\gameStateEnd.cpp">
+      <Filter>state\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource\anim2D.h">
@@ -754,6 +760,12 @@
     </ClInclude>
     <ClInclude Include="resource\blockFactory.h">
       <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\explosion.h">
+      <Filter>ingame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\gameStateEnd.h">
+      <Filter>state\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

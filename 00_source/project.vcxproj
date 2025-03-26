@@ -173,6 +173,7 @@
     <ClCompile Include="resource\deltaTime.cpp" />
     <ClCompile Include="resource\effect2D.cpp" />
     <ClCompile Include="resource\effect3D.cpp" />
+    <ClCompile Include="resource\explosion.cpp" />
     <ClCompile Include="resource\extension.cpp" />
     <ClCompile Include="resource\fade.cpp" />
     <ClCompile Include="resource\field.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="resource\fontChar.cpp" />
     <ClCompile Include="resource\gameManager.cpp" />
     <ClCompile Include="resource\gameState.cpp" />
+    <ClCompile Include="resource\gameStateEnd.cpp" />
     <ClCompile Include="resource\gameStateNormal.cpp" />
     <ClCompile Include="resource\gauge2D.cpp" />
     <ClCompile Include="resource\hitStop.cpp" />
@@ -290,6 +292,7 @@
     <ClInclude Include="resource\deltaTime.h" />
     <ClInclude Include="resource\effect2D.h" />
     <ClInclude Include="resource\effect3D.h" />
+    <ClInclude Include="resource\explosion.h" />
     <ClInclude Include="resource\extension.h" />
     <ClInclude Include="resource\fade.h" />
     <ClInclude Include="resource\field.h" />
@@ -297,6 +300,7 @@
     <ClInclude Include="resource\fontChar.h" />
     <ClInclude Include="resource\gameManager.h" />
     <ClInclude Include="resource\gameState.h" />
+    <ClInclude Include="resource\gameStateEnd.h" />
     <ClInclude Include="resource\gameStateNormal.h" />
     <ClInclude Include="resource\gauge2D.h" />
     <ClInclude Include="resource\hitStop.h" />
