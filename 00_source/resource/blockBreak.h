@@ -36,7 +36,7 @@ public:
 	void Draw(CShader* pShader = nullptr) override;		// 描画
 
 	// メンバ関数
-	bool Hit() override;		// ヒット処理
+	void Hit() override;		// ヒット処理
 
 private:
 

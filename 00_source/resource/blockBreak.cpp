@@ -84,11 +84,11 @@ void CBlockBreak::Draw(CShader* pShader)
 //============================================================
 // ヒット処理
 //============================================================
-bool CBlockBreak::Hit()
+void CBlockBreak::Hit()
 {
-	// 死んでいた場合、false を返す
-	if (IsDeath()) { return false; }
+	// 死んでいた場合、関数を抜ける
+	if (IsDeath()) { return; }
 
-	// true を返す
-	return true;
+	// 終了処理
+	Uninit();
 }
