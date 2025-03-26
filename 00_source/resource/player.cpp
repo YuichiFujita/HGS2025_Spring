@@ -38,20 +38,22 @@ namespace
 {
 	const char*	TEXTURE_RIGHT	= "data\\TEXTURE\\player_right000.png";	// プレイヤー右方向のテクスチャパス
 	const char*	TEXTURE_LEFT	= "data\\TEXTURE\\player_left000.png";	// プレイヤー左方向のテクスチャパス
-	const int	PRIORITY	= 3;			// プレイヤーの優先順位
-	const float	MOVE		= 0.9f;			// 移動量
-	const float	JUMP		= 6.4f;			// ジャンプ力
-	const float	GRAVITY		= 0.34f;		// 重力
-	const float	RADIUS		= 20.0f;		// 半径
-	const float WIDTH		= 50.0f;		// 横幅
-	const float HEIGHT		= 50.0f;		// 縦幅
-	const float	REV_ROTA	= 0.25f;		// 向き変更の補正係数
-	const float	JUMP_REV	= 0.97f;		// 通常状態時の空中の移動量の減衰係数
-	const float	LAND_REV	= 0.18f;		// 通常状態時の地上の移動量の減衰係数
-	const float	JUMP_PRESS_TIME	= 0.37f;	// ジャンプ加算時間
-	const float	MAX_ADD_JUMP	= 1.3f;		// ジャンプ加算最大値
-	const float	SHOT_INTERVAL	= 0.4f;		// 攻撃インターバル
-	const float	BULLET_OFFSET_X = 8.0f;		// 弾発生座標のXオフセット
+	const int	PRIORITY	= 3;		// プレイヤーの優先順位
+	const float	MOVE		= 0.9f;		// 移動量
+	const float	JUMP		= 6.4f;		// ジャンプ力
+	const float	GRAVITY		= 0.39f;	// 重力
+	const float	RADIUS		= 20.0f;	// 半径
+	const float WIDTH		= 50.0f;	// 横幅
+	const float HEIGHT		= 50.0f;	// 縦幅
+	const float	REV_ROTA	= 0.25f;	// 向き変更の補正係数
+	const float	JUMP_REV	= 0.955f;	// 通常状態時の空中の移動量の減衰係数
+	const float	LAND_REV	= 0.18f;	// 通常状態時の地上の移動量の減衰係数
+	const float	HOVER_PRESS_TIME	= 0.65f;	// ホバー時間
+	const float HOVER_MIN_GRAVITY	= -2.45f;	// ホバー時の補正重力
+	const float	JUMP_PRESS_TIME		= 0.37f;	// ジャンプ加算時間
+	const float	MAX_ADD_JUMP		= 1.3f;		// ジャンプ加算最大値
+	const float	SHOT_INTERVAL		= 0.4f;		// 攻撃インターバル
+	const float	BULLET_OFFSET_X		= 8.0f;		// 弾発生座標のXオフセット
 
 	namespace camera
 	{
@@ -77,16 +79,18 @@ CPlayer::AFuncState CPlayer::m_aFuncState[] =		// 状態更新関数リスト
 //	コンストラクタ
 //============================================================
 CPlayer::CPlayer() : CObject3D(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY),
-	m_oldPos	 (VEC3_ZERO),	// 過去位置
-	m_move		 (VEC3_ZERO),	// 移動量
-	m_state		 (STATE_NONE),	// 状態
-	m_bRight	 (false),		// 左右フラグ
-	m_bJump		 (false),		// 現在ジャンプ状況
-	m_bOldJump	 (false),		// 過去ジャンプ状況
-	m_bJumpPress (false),		// ジャンプ操作フラグ
-	m_fJumpTimer (0.0f),		// ジャンプ操作時間
-	m_fShotTimer (0.0f),		// 攻撃インターバル
-	m_fMaxMulti	 (0.0f)			// ジャンプ中の最高倍率
+	m_oldPos		(VEC3_ZERO),	// 過去位置
+	m_move			(VEC3_ZERO),	// 移動量
+	m_state			(STATE_NONE),	// 状態
+	m_bRight		(false),		// 左右フラグ
+	m_bJump			(false),		// 現在ジャンプ状況
+	m_bOldJump		(false),		// 過去ジャンプ状況
+	m_bReleaseJump	(false),		// ジャンプ操作解除フラグ
+	m_bJumpPress	(false),		// ジャンプ操作フラグ
+	m_fJumpTimer	(0.0f),			// ジャンプ操作時間
+	m_fShotTimer	(0.0f),			// 攻撃インターバル
+	m_fHoverTimer	(0.0f),			// ホバー時間
+	m_fMaxMulti		(0.0f)			// ジャンプ中の最高倍率
 {
 	// スタティックアサート
 	static_assert(NUM_ARRAY(m_aFuncState) == CPlayer::STATE_MAX, "ERROR : State Count Mismatch");
@@ -106,16 +110,18 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Init()
 {
 	// メンバ変数を初期化
-	m_oldPos	 = VEC3_ZERO;		// 過去位置
-	m_move		 = VEC3_ZERO;		// 移動量
-	m_state		 = STATE_NORMAL;	// 状態
-	m_bRight	 = false;			// 左右フラグ
-	m_bJump		 = true;			// ジャンプ状況
-	m_bOldJump	 = true;			// 過去ジャンプ状況
-	m_bJumpPress = false;			// ジャンプ操作フラグ
-	m_fJumpTimer = 0.0f;			// ジャンプ操作時間
-	m_fShotTimer = 0.0f;			// 攻撃インターバル
-	m_fMaxMulti	 = 0.0f;			// ジャンプ中の最高倍率
+	m_oldPos		= VEC3_ZERO;	// 過去位置
+	m_move			= VEC3_ZERO;	// 移動量
+	m_state			= STATE_NORMAL;	// 状態
+	m_bRight		= false;		// 左右フラグ
+	m_bJump			= true;			// ジャンプ状況
+	m_bOldJump		= true;			// 過去ジャンプ状況
+	m_bReleaseJump	= false;		// ジャンプ操作解除フラグ
+	m_bJumpPress	= false;		// ジャンプ操作フラグ
+	m_fJumpTimer	= 0.0f;			// ジャンプ操作時間
+	m_fShotTimer	= 0.0f;			// 攻撃インターバル
+	m_fHoverTimer	= 0.0f;			// ホバー時間
+	m_fMaxMulti		= 0.0f;			// ジャンプ中の最高倍率
 
 	// オブジェクトキャラクターの初期化
 	if (FAILED(CObject3D::Init()))
@@ -618,6 +624,9 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 			// ジャンプ開始する
 			m_bJumpPress = m_bJump = true;
 
+			// ジャンプ操作解除フラグを初期化
+			m_bReleaseJump = false;
+
 			// ジャンプ操作時間を初期化
 			m_fJumpTimer = 0.0f;
 
@@ -629,16 +638,29 @@ void CPlayer::UpdateJump(const float fDeltaTime)
 		}
 	}
 
-	if (pKey->IsPress(DIK_SPACE) || pPad->IsPress(CInputPad::KEY_A))
+	if (pKey->IsRelease(DIK_SPACE) || pPad->IsRelease(CInputPad::KEY_A))
 	{ // まだプレス中の場合
 
-		if (m_bJump)
-		{ // ジャンプしている場合
+		// ジャンプ操作解除済みにする
+		m_bReleaseJump = true;
+	}
 
-			if (m_move.y <= -0.95f)
-			{ // 重力に負け始めている場合
+	if (m_bReleaseJump)
+	{ // ジャンプ操作を解除済みの場合
 
-				m_move.y = -0.95f;
+		if (pKey->IsPress(DIK_SPACE) || pPad->IsPress(CInputPad::KEY_A))
+		{ // まだプレス中の場合
+
+			// ホバー時間を経過させる
+			m_fHoverTimer += fDeltaTime;
+
+			if (m_bJump								// ジャンプ中
+			&&  m_move.y <= HOVER_MIN_GRAVITY		// 重力に負け始めている
+			&&  m_fHoverTimer < HOVER_PRESS_TIME)	// ホバー時間が残っている
+			{ // 上記の場合
+
+				// 移動量を補正
+				m_move.y = -2.45f;
 			}
 		}
 	}
@@ -745,6 +767,9 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 
 		// 攻撃インターバルを初期化
 		m_fShotTimer = 0.0f;
+
+		// ホバー時間を初期化
+		m_fHoverTimer = 0.0f;
 
 		// 倍率を初期化
 		m_fMaxMulti = 0.0f;

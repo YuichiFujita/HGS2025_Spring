@@ -96,9 +96,11 @@ private:
 	bool	m_bRight;		// 左右フラグ
 	bool	m_bJump;		// 現在ジャンプ状況
 	bool	m_bOldJump;		// 過去ジャンプ状況
+	bool	m_bReleaseJump;	// ジャンプ操作解除フラグ
 	bool	m_bJumpPress;	// ジャンプ操作フラグ
 	float	m_fJumpTimer;	// ジャンプ操作時間
 	float	m_fShotTimer;	// 攻撃インターバル
+	float	m_fHoverTimer;	// ホバー時間
 	float	m_fMaxMulti;	// ジャンプ中の最高倍率
 };
 
