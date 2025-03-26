@@ -161,6 +161,10 @@ CBullet* CBullet::Create
 			return nullptr;
 		}
 
+		// テクスチャを割当
+		if (bRight) { pBlock->BindTexture("data\\TEXTURE\\bullet_right000.png"); }
+		else		{ pBlock->BindTexture("data\\TEXTURE\\bullet_left000.png"); }
+
 		// 位置を設定
 		pBlock->SetVec3Position(rPos);
 
