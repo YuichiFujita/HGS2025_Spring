@@ -68,7 +68,8 @@ void CBlockBreak::Uninit()
 //============================================================
 void CBlockBreak::Update(const float fDeltaTime)
 {
-
+	// ブロックの更新処理
+	CBlock::Update(fDeltaTime);
 }
 
 //============================================================

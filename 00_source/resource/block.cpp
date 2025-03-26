@@ -16,7 +16,7 @@
 //************************************************************
 namespace
 {
-	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(50.0f, 25.0f, 0.0f);
+	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(50.0f, 25.0f, 0.0f);		// 半径
 }
 
 //************************************************************
@@ -32,7 +32,8 @@ CListManager<CBlock>* CBlock::m_pList = nullptr;	// オブジェクトリスト
 //============================================================
 CBlock::CBlock() : CObject3D(CObject::LABEL_BLOCK, CObject::DIM_3D, 4),
 m_type(CBlock::TYPE_BREAK),		// 種類
-m_bRight(true)					// 右側状況
+m_bRight(true),					// 右側状況
+m_fSpeed(0.0f)					// 速度
 {
 
 }
@@ -104,6 +105,9 @@ void CBlock::Uninit()
 //============================================================
 void CBlock::Update(const float fDeltaTime)
 {
+	// 移動処理
+	Move();
+
 	// 頂点座標の設定処理
 	SetVtx();
 }
@@ -124,6 +128,7 @@ CBlock* CBlock::Create
 (
 	const VECTOR3& rPos,	// 位置
 	const EType type,		// 種類
+	const float fSpeed,		// 速度
 	const bool bRight		// 右側
 )
 {
@@ -176,6 +181,9 @@ CBlock* CBlock::Create
 		// 種類を設定
 		pBlock->m_type = type;
 
+		// 速度を設定
+		pBlock->m_fSpeed = fSpeed;
+
 		// 右側情報を設定
 		pBlock->m_bRight = bRight;
 
@@ -191,4 +199,26 @@ CListManager<CBlock>* CBlock::GetList()
 {
 	// オブジェクトリストを返す
 	return m_pList;
+}
+
+//============================================================
+// 移動処理
+//============================================================
+void CBlock::Move(void)
+{
+	// 位置取得
+	VECTOR3 pos = GetVec3Position();
+
+	// 位置を進める
+	if (m_bRight)
+	{ // 右側移動の場合
+		pos.x += m_fSpeed;
+	}
+	else
+	{ // 左側移動の場合
+		pos.x -= m_fSpeed;
+	}
+
+	// 位置設定
+	SetVec3Position(pos);
 }

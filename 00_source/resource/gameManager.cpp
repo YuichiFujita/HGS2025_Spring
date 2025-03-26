@@ -143,14 +143,6 @@ HRESULT CGameManager::Init()
 		return E_FAIL;
 	}
 
-	// ブロックの生成
-	if (CBlock::Create(VEC3_ZERO, CBlock::TYPE_BREAK, true) == nullptr)
-	{ // 生成に失敗した場合
-
-		assert(false);
-		return E_FAIL;
-	}
-
 	return S_OK;
 }
 
@@ -191,6 +183,27 @@ void CGameManager::Update(const float fDeltaTime)
 	// タイマーの更新
 	//m_pTimer->Update(fDeltaTime);
 #endif
+
+#ifdef _DEBUG
+
+	// ブロックの生成
+	if (GET_INPUTKEY->IsTrigger(DIK_9))
+	{
+		if (CBlock::Create(VEC3_ZERO, CBlock::TYPE_BREAK, 6.0f, true) == nullptr)
+		{ // 生成に失敗した場合
+
+			assert(false);
+		}
+	}
+	else if (GET_INPUTKEY->IsTrigger(DIK_0))
+	{
+		if (CBlock::Create(VEC3_ZERO, CBlock::TYPE_BREAK, 6.0f, false) == nullptr)
+		{ // 生成に失敗した場合
+
+			assert(false);
+		}
+	}
+#endif // _DEBUG
 }
 
 //============================================================

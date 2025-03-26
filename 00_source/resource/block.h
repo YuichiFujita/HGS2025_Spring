@@ -47,6 +47,7 @@ public:
 	( // 引数
 		const VECTOR3& rPos,	// 位置
 		const EType type,		// 種類
+		const float fSpeed,		// 速度
 		const bool bRight		// 右側
 	);
 	static CListManager<CBlock>* GetList();	// リスト取得
@@ -56,12 +57,16 @@ public:
 
 private:
 
+	// メンバ関数
+	void Move(void);			// 移動処理
+
 	// 静的メンバ変数
 	static CListManager<CBlock>* m_pList;	// オブジェクトリスト
 
 	// メンバ変数
 	CListManager<CBlock>::AIterator m_iterator;	// イテレーター
 	EType m_type;		// 種類
+	float m_fSpeed;		// 速度
 	bool m_bRight;		// 右側状況
 };
 
