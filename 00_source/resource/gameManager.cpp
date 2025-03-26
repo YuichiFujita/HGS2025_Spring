@@ -226,6 +226,8 @@ void CGameManager::Update(const float fDeltaTime)
 		}
 	}
 #endif // _DEBUG
+
+	GET_MANAGER->GetDebugProc()->Print(CDebugProc::POINT_RIGHT, "基礎スコア：[%d]\n", m_nBaseScore);
 }
 
 //============================================================

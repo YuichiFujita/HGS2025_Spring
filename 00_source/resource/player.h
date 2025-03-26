@@ -94,7 +94,8 @@ private:
 	VECTOR3	m_move;			// 移動量
 	EState	m_state;		// 状態
 	bool	m_bRight;		// 左右フラグ
-	bool	m_bJump;		// ジャンプ状況
+	bool	m_bJump;		// 現在ジャンプ状況
+	bool	m_bOldJump;		// 過去ジャンプ状況
 	bool	m_bJumpPress;	// ジャンプ操作フラグ
 	float	m_fJumpTimer;	// ジャンプ操作時間
 	float	m_fShotTimer;	// 攻撃インターバル

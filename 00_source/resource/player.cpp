@@ -81,7 +81,8 @@ CPlayer::CPlayer() : CObject3D(CObject::LABEL_PLAYER, CObject::DIM_3D, PRIORITY)
 	m_move		 (VEC3_ZERO),	// 移動量
 	m_state		 (STATE_NONE),	// 状態
 	m_bRight	 (false),		// 左右フラグ
-	m_bJump		 (false),		// ジャンプ状況
+	m_bJump		 (false),		// 現在ジャンプ状況
+	m_bOldJump	 (false),		// 過去ジャンプ状況
 	m_bJumpPress (false),		// ジャンプ操作フラグ
 	m_fJumpTimer (0.0f),		// ジャンプ操作時間
 	m_fShotTimer (0.0f),		// 攻撃インターバル
@@ -110,6 +111,7 @@ HRESULT CPlayer::Init()
 	m_state		 = STATE_NORMAL;	// 状態
 	m_bRight	 = false;			// 左右フラグ
 	m_bJump		 = true;			// ジャンプ状況
+	m_bOldJump	 = true;			// 過去ジャンプ状況
 	m_bJumpPress = false;			// ジャンプ操作フラグ
 	m_fJumpTimer = 0.0f;			// ジャンプ操作時間
 	m_fShotTimer = 0.0f;			// 攻撃インターバル
@@ -180,6 +182,9 @@ void CPlayer::Update(const float fDeltaTime)
 {
 	// 過去位置の更新
 	UpdateOldPosition();
+
+	// 過去ジャンプ状況の更新
+	m_bOldJump = m_bJump;
 
 	// 状態の更新
 	(this->*(m_aFuncState[m_state]))(fDeltaTime);
@@ -484,7 +489,7 @@ void CPlayer::UpdateNormal(const float fDeltaTime)
 	// 向きを反映
 	SetVec3Rotation(rotPlayer);
 
-	GET_MANAGER->GetDebugProc()->Print(CDebugProc::POINT_RIGHT, "スコア倍率：[%f]", m_fMaxMulti);
+	GET_MANAGER->GetDebugProc()->Print(CDebugProc::POINT_RIGHT, "スコア倍率：[%f]\n", m_fMaxMulti);
 }
 
 //============================================================
@@ -704,9 +709,12 @@ bool CPlayer::UpdateLanding(VECTOR3* pPos, const float fDeltaTime)
 
 			// スコアを加算
 			pGameManager->AddScore((int)((float)pGameManager->GetBaseScore() * m_fMaxMulti));
+			if (m_bOldJump)
+			{ // 前フレームで着地していない場合
 
-			// 基礎スコアを初期化
-			pGameManager->InitBaseScore();
+				// 基礎スコアを初期化
+				pGameManager->InitBaseScore();
+			}
 		}
 
 		// 着地している状態にする
