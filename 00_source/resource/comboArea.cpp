@@ -28,6 +28,7 @@ namespace
 	};
 	const D3DXVECTOR3 RADIUS = D3DXVECTOR3(1440.0f, 240.0f, 0.0f);		// 半径
 	const float MULTI_RATE = 0.5f;		// コンボ倍率
+	const float MIN_MULTI = 1.0f;		// コンボの最低値
 }
 
 //************************************************************
@@ -133,7 +134,7 @@ void CComboArea::Draw(CShader* pShader)
 float CComboArea::GetMulti(void) const
 {
 	// コンボ倍率を返す
-	return (float)m_nIdx * MULTI_RATE;
+	return (float)(m_nIdx * MULTI_RATE) + MIN_MULTI;
 }
 
 //============================================================

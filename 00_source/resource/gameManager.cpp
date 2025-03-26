@@ -315,6 +315,18 @@ bool CGameManager::IsNormal() const
 }
 
 //============================================================
+// コンボスコアの設定処理
+//============================================================
+void CGameManager::SetComboScore(const float fMulti)
+{
+	// コンボUIが NULL の場合、関数を抜ける
+	if (m_pComboUI == nullptr) { assert(false); return; }
+
+	// 倍率数値の設定処理
+	m_pComboUI->SetMultiValue(fMulti);
+}
+
+//============================================================
 //	生成処理
 //============================================================
 CGameManager* CGameManager::Create()

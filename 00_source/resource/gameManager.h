@@ -48,6 +48,7 @@ public:
 	inline int GetBaseScore()						{ return m_nBaseScore; }	// 基礎スコア取得
 	inline void SetEnableControlOK(const bool bOK)	{ m_bControlOK = bOK; }		// 操作可能フラグ設定
 	inline bool IsControlOK() const					{ return m_bControlOK; }	// 操作可能フラグ取得
+	void SetComboScore(const float fMulti);		// コンボスコアの設定処理
 
 	// 静的メンバ関数
 	static CGameManager* Create();	// 生成
