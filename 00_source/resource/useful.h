@@ -844,6 +844,7 @@ namespace useful
 	float RandomRot();					// ランダム向き取得
 	void NormalizeRot(float& rRot);		// 向きの正規化
 	void NormalizeRot(VECTOR3& rRot);	// 三軸向きの正規化
+	bool ScreenOut(const VECTOR3& rPos, const float fSizeX);	// 画面外判定
 	void PathToBaseName(std::string* pPath);		// パスのベースネーム変換
 	void StandardizePathPart(std::string* pPath);	// パス区切りの標準化
 	std::string SandString(const std::string& rTop, const std::string& rMain, const std::string& rCur);		// 文字列の左右追加 (マルチバイト文字列)

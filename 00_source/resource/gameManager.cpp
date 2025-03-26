@@ -13,6 +13,8 @@
 #include "retention.h"
 #include "rankingManager.h"
 
+#include "block.h"
+
 #ifdef SCORE
 #include "multiValue.h"
 #else TIMER
@@ -181,6 +183,27 @@ void CGameManager::Update(const float fDeltaTime)
 	// タイマーの更新
 	//m_pTimer->Update(fDeltaTime);
 #endif
+
+#ifdef _DEBUG
+
+	// ブロックの生成
+	if (GET_INPUTKEY->IsTrigger(DIK_9))
+	{
+		if (CBlock::Create(D3DXVECTOR3(0.0f, 200.0f, 0.0f), CBlock::TYPE_BREAK, 6.0f, false) == nullptr)
+		{ // 生成に失敗した場合
+
+			assert(false);
+		}
+	}
+	else if (GET_INPUTKEY->IsTrigger(DIK_0))
+	{
+		if (CBlock::Create(D3DXVECTOR3(0.0f,200.0f,0.0f), CBlock::TYPE_BREAK, 6.0f, true) == nullptr)
+		{ // 生成に失敗した場合
+
+			assert(false);
+		}
+	}
+#endif // _DEBUG
 }
 
 //============================================================
