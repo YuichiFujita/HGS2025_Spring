@@ -841,6 +841,8 @@ namespace useful
 		const float fCurTime		// 現在時間
 	);
 
+	float Random(const float fMin, const float fMax, const int nDigit);	// ランダム値取得 (float型)
+	int Random(int nMin, int nMax);		// ランダム値取得 (int型)
 	float RandomRot();					// ランダム向き取得
 	void NormalizeRot(float& rRot);		// 向きの正規化
 	void NormalizeRot(VECTOR3& rRot);	// 三軸向きの正規化
@@ -897,6 +899,11 @@ namespace useful
 	(
 		T* pShuffleData,		// シャッフル配列
 		const int nMaxShuffle	// 配列サイズ
+	);
+	template<class T> void Swap			// 入れ替え
+	( // 引数
+		T& rNum1,	// 数値1
+		T& rNum2	// 数値2
 	);
 }
 
@@ -1386,6 +1393,21 @@ template<class T> void useful::Shuffle
 		pShuffleData[nRandom]	= pShuffleData[nCntShu];
 		pShuffleData[nCntShu]	= swap;
 	}
+}
+
+//============================================================
+//	入れ替え処理
+//============================================================
+template<class T> void useful::Swap
+(
+	T& rNum1,	// 数値1
+	T& rNum2	// 数値2
+)
+{
+	// 要素の入れ替え
+	T swap	= rNum1;
+	rNum1	= rNum2;
+	rNum2	= swap;
 }
 
 #endif	// _USEFUL_H_

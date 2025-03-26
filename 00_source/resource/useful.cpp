@@ -396,6 +396,41 @@ float useful::GetTexHeightFromAspect(const float fWidth, const int nTexIdx)
 }
 
 //============================================================
+//	ƒ‰ƒ“ƒ_ƒ€’l‚Ìæ“¾ (floatŒ^)
+//============================================================
+float useful::Random(const float fMin, const float fMax, const int nDigit)
+{
+	// ŠeŒ^‚Ö‚Ì•ÏŠ·”{—¦‚ğì¬
+	float fMulToInt = 1.0f;		// int•ÏŠ·”{—¦
+	float fMulToFloat = 1.0f;	// float•ÏŠ·”{—¦
+	for (int i = 0; i < nDigit; i++)
+	{ // ‰Á–¡‚·‚é¬”“_‚ÌŒ…”•ªŒJ‚è•Ô‚·
+
+		fMulToInt *= 10.0f;		// ”{—¦‚ğã‚°‚é
+		fMulToFloat *= 0.1f;	// ”{—¦‚ğ‰º‚°‚é
+	}
+
+	// Å¬/Å‘å’l‚ğintŒ^‚É•ÏŠ·
+	int nMin = (int)(fMin * fMulToInt);	// ®”Å¬’l
+	int nMax = (int)(fMax * fMulToInt);	// ®”Å‘å’l
+
+	// floatŒ^‚É•ÏŠ·‚µ‚½—”‚ğ•Ô‚·
+	return (float)useful::Random(nMin, nMax) * fMulToFloat;
+}
+
+//============================================================
+//	ƒ‰ƒ“ƒ_ƒ€’l‚Ìæ“¾ (intŒ^)
+//============================================================
+int useful::Random(int nMin, int nMax)
+{
+	// Å¬’l‚ªÅ‘å’l‚æ‚è‘å‚«‚¢ê‡’l‚ğ“ü‚ê‘Ö‚¦
+	if (nMin > nMax) { useful::Swap(nMin, nMax); }
+
+	// ”ÍˆÍ“à‚Å¶¬‚µ‚½—”‚ğ•Ô‚·
+	return rand() % (nMax + 1 - nMin) + nMin;
+}
+
+//============================================================
 //	ƒ‰ƒ“ƒ_ƒ€Œü‚«æ“¾
 //============================================================
 float useful::RandomRot()
