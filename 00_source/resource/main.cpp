@@ -31,7 +31,7 @@ namespace
 	const char* CLASS_NAME	= "WindowClass";	// ウインドウクラスの名前
 	const char* WINDOW_NAME	= "HGSSpring";		// ウインドウの名前 (キャプションに表示)
 	const int	APP_FPS		= 1000 / main::FPS;	// アプリケーションの経過時間の判定用
-	const bool	FULLSCREEN	= false;				// フルスクリーンの設定 (true：フルスクOFF / false：フルスクON)
+	const bool	FULLSCREEN	= true;				// フルスクリーンの設定 (true：フルスクOFF / false：フルスクON)
 }
 
 //************************************************************
